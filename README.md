@@ -24,6 +24,8 @@ Link to the project: abc123
 
 ## Citations, References & Documentation
 
-1. ![Tailwind Documentation](https://tailwindcss.com/docs/installation)
+1. [Project Report](https://docs.google.com/document/d/12AENAU7EaBRcSiLJ1qb7_heKvGvwgmWQLrHg1B9yVk4/edit?usp=sharing)
+2. [Project Diagrams](https://app.eraser.io/workspace/McVqowoKzY5hxflFWgoU?origin=share)
+3. [Tailwind Documentation](https://tailwindcss.com/docs/installation)
 
 Thank you for viewing! <3
