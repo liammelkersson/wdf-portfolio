@@ -11,6 +11,7 @@ This project was created as a final project for the Web Development Fundamentals
 Link to the project: abc123
 
 ## Tech Stack
+
 [![My Skills](https://skillicons.dev/icons?i=html,css,javascript,nodejs,express,tailwindcss,sqlite,postman)](https://skillicons.dev)
 
 1. HTML, CSS, JavaScript
@@ -21,8 +22,8 @@ Link to the project: abc123
 6. Postman
 7. (also handlebars to dynamically update pages)
 
-## Citations and References
+## Citations, References & Documentation
 
-1. abc123
+1. ![Tailwind Documentation](https://tailwindcss.com/docs/installation)
 
 Thank you for viewing! <3
