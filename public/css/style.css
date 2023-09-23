@@ -1,0 +1,87 @@
+/* VARIABLES */
+:root {
+  --ff-sans-serif: "neue-haas-unica", helvetica, "Inter" sans-serif;
+}
+
+/* GLOBAL */
+* {
+  font-family: var(--ff-sans-serif);
+}
+
+/* HIDE SCROLL BAR  */
+/*      For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/*      For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* ANIMATIONS */
+.header-animation {
+  animation-name: header-animation;
+  animation-duration: 2000ms;
+  animation-timing-function: cubic-bezier(0.52, 0.15, 0, 1);
+  animation-iteration-count: 1;
+}
+
+@keyframes header-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(-20vw);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header-animation-2 {
+  animation-name: header-animation-2;
+  animation-duration: 2000ms;
+  animation-timing-function: cubic-bezier(0.52, 0.15, 0, 1);
+  animation-iteration-count: 1;
+}
+
+@keyframes header-animation-2 {
+  0% {
+    opacity: 0;
+    transform: translateX(20vw);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* BOX-SHADOWS */
+/*  generated at https://cssgenerator.org/box-shadow-css-generator.html */
+.blue-box-shadow {
+  box-shadow: -3px 3px 90px -35px rgba(24, 140, 186, 0.85);
+  -webkit-box-shadow: -3px 3px 90px -35px rgba(24, 140, 186, 0.85);
+  -moz-box-shadow: -3px 3px 90px -35px rgba(24, 140, 186, 0.85);
+}
+
+.work-box-shadow {
+  box-shadow: -1px -15px 19px 2px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: -1px -15px 19px 2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px -15px 19px 2px rgba(0, 0, 0, 0.75);
+
+  /* box-shadow: 3px 3px 400px -40px rgba(0, 0, 0, 1) inset;
+    -webkit-box-shadow: 3px 3px 400px -40px rgba(0, 0, 0, 1) inset;
+    -moz-box-shadow: 3px 3px 400px -40px rgba(0, 0, 0, 1) inset; */
+}
+
+/* OTHER EFFFECTS */
+/*  generated at https://hype4.academy/tools/glassmorphism-generator */
+.glassmorphism {
+  background: rgba(115, 115, 115, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
