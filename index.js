@@ -1,9 +1,26 @@
+//VARIABLES
 const express = require("express");
 const { engine } = require("express-handlebars");
-
 const port = 3000;
-const app = express(); // creates the Express application
+const app = express();
 
+//Module for database
+const db = require("./db/database");
+
+// db.serialize(() => {
+//   db.run(
+//     "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)"
+//   );
+//   db.run("INSERT INTO users (name, age) VALUES (?, ?)", ["John", 25]);
+//   db.run("INSERT INTO users (name, age) VALUES (?, ?)", ["Alice", 30]);
+//   db.each("SELECT * FROM users", (err, row) => {
+//     console.log(row);
+//   });
+// });
+
+// db.close();
+
+//  MVC SETUP
 // defines handlebars engine
 app.engine("handlebars", engine());
 // defines the view engine to be handlebars
@@ -15,35 +32,35 @@ app.set("views", "./views");
 app.use(express.static("public"));
 
 // MODEL (DATA)
-const humans = [
-  { id: "0", name: "Jerome" },
-  { id: "1", name: "Mira" },
-  { id: "2", name: "Linus" },
-  { id: "3", name: "Susanne" },
-  { id: "4", name: "Jasmin" },
-];
+// const humans = [
+//   { id: "0", name: "Jerome" },
+//   { id: "1", name: "Mira" },
+//   { id: "2", name: "Linus" },
+//   { id: "3", name: "Susanne" },
+//   { id: "4", name: "Jasmin" },
+// ];
 
 // CONTROLLER (THE BOSS)
 // defines route "/"
-app.get("/", function (request, response) {
-  response.render("home.hbs");
-});
+// app.get("/", function (request, response) {
+//   response.render("home.hbs");
+// });
 
 // defines route "/humans"
-app.get("/humans", function (request, response) {
-  const model = { listHumans: humans }; // defines the model
-  // in the next line, you should send the abovedefined
-  // model to the page and not an empty object {}...
-  response.render("humans.hbs", model);
-});
+// app.get("/humans", function (request, response) {
+//   const model = { listHumans: humans }; // defines the model
+//   // in the next line, you should send the abovedefined
+//   // model to the page and not an empty object {}...
+//   response.render("humans.hbs", model);
+// });
 
 // defines route "/humans/1"
-app.get("/humans/1", function (request, response) {
-  const model = humans[1]; // defines the model
-  // in the next line, you should send the abovedefined
-  // model to the page and not an empty object {}...
-  response.render("human.hbs", model);
-});
+// app.get("/humans/1", function (request, response) {
+//   const model = humans[1]; // defines the model
+//   // in the next line, you should send the abovedefined
+//   // model to the page and not an empty object {}...
+//   response.render("human.hbs", model);
+// });
 
 // defines the final default route 404 NOT FOUND
 app.use(function (req, res) {
