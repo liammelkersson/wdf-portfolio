@@ -2,7 +2,12 @@
 
 ## Description
 
-abc123
+Meet the Full Stack Portfolio Manager with CRUD Operations—an awesome web app designed to give individuals, creatives, and professionals the power to show off their work, skills, and accomplishments in an interactive online portfolio. This project brings together both front-end and back-end tech to create a versatile platform that makes managing and displaying your portfolio a breeze.
+
+Key features:
+
+1. User managment system
+2. Project management system
 
 ## Project Information
 
