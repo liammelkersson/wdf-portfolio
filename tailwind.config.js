@@ -2,10 +2,14 @@
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./public/*.{html,js}"],
+  content: [
+    "./views/layouts/*.handlebars",
+    "./views/partials/*.handlebars",
+    "./views/*.handlebars",
+  ],
   theme: {
     extend: {},
   },
   plugins: [],
-  jit: true, // Enable JIT mode
+  // jit: true, // Enable JIT mode
 };
