@@ -31,42 +31,37 @@ app.set("views", "./views");
 // define static directory "public" to access css/, img/ and vid/
 app.use(express.static("public"));
 
-// MODEL (DATA)
-// const humans = [
-//   { id: "0", name: "Jerome" },
-//   { id: "1", name: "Mira" },
-//   { id: "2", name: "Linus" },
-//   { id: "3", name: "Susanne" },
-//   { id: "4", name: "Jasmin" },
-// ];
-
 // CONTROLLER (THE BOSS)
 // defines route "/"
-// app.get("/", function (request, response) {
-//   response.render("home.hbs");
-// });
+app.get("/", function (request, response) {
+  response.render("home.handlebars");
+});
 
-// defines route "/humans"
-// app.get("/humans", function (request, response) {
-//   const model = { listHumans: humans }; // defines the model
-//   // in the next line, you should send the abovedefined
-//   // model to the page and not an empty object {}...
-//   response.render("humans.hbs", model);
-// });
+// defines route "/projects"
+app.get("/projects", function (request, response) {
+  // const model = { listHumans: humans }; // defines the model
+  // // in the next line, you should send the abovedefined
+  // // model to the page and not an empty object {}...
+  response.render("projects.handlebars");
+});
 
-// defines route "/humans/1"
-// app.get("/humans/1", function (request, response) {
-//   const model = humans[1]; // defines the model
-//   // in the next line, you should send the abovedefined
-//   // model to the page and not an empty object {}...
-//   response.render("human.hbs", model);
-// });
+// defines route "/about"
+app.get("/about", function (request, response) {
+  // const model = humans[1]; // defines the model
+  // // in the next line, you should send the abovedefined
+  // // model to the page and not an empty object {}...
+  response.render("about.handlebars");
+});
+
+// defines route "/contact"
+app.get("/contact", function (request, response) {
+  response.render("contact.handlebars");
+});
 
 // defines the final default route 404 NOT FOUND
 app.use(function (req, res) {
-  res.status(404).render("404.hbs");
+  res.status(404).render("404.handlebars");
 });
-
 // runs the app and listens to the port
 app.listen(port, () => {
   console.log(`Express server listening on http://localhost:${port}/`);
