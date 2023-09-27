@@ -11,5 +11,5 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  // jit: true, // Enable JIT mode
+  jit: true, // Enable JIT mode
 };
