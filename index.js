@@ -58,6 +58,10 @@ app.get("/contact", function (request, response) {
   response.render("contact.handlebars");
 });
 
+app.get("/user-dashboard", function (request, response) {
+  response.render("user-dashboard.handlebars");
+});
+
 // defines the final default route 404 NOT FOUND
 app.use(function (req, res) {
   res.status(404).render("404.handlebars");

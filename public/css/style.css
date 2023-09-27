@@ -8,14 +8,24 @@
   font-family: var(--ff-sans-serif);
 }
 
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
+}
+
 /* HIDE SCROLL BAR  */
-/*      For Webkit-based browsers (Chrome, Safari and Opera) */
-.scrollbar-hide::-webkit-scrollbar {
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
   display: none;
 }
 
-/*      For IE, Edge and Firefox */
-.scrollbar-hide {
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
@@ -84,4 +94,15 @@
   -webkit-backdrop-filter: blur(7px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* HOVER EFFECTS */
+.hover-color:hover {
+  color: rgb(198, 101, 42);
+}
+
+/* HUE CHANGE */
+
+.hue-change {
+  filter: hue-rotate(200deg);
 }
