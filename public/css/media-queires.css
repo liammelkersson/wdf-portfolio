@@ -1,5 +1,7 @@
 /* RESPONSIVENESS WITH MEDIA QUERIES */
 
 @media only screen and (max-width: 800px) {
-  /* abc123 */
+  .md-flip-video {
+    rotate: 90deg;
+  }
 }
