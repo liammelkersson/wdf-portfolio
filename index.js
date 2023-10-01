@@ -30,31 +30,49 @@ app.use((req, res, next) => {
 ROUTES
 ***/
 // defines route "/"
-app.get("/", function (request, response) {
-  response.render("home.handlebars");
+app.get("/", function (req, res) {
+  res.render("home.handlebars");
 });
 
-// defines route "/projects"
-app.get("/projects", function (request, response) {
-  response.render("projects.handlebars");
+// renders route "/projects" with DATA from db
+app.get("/projects", function (req, res) {
+  db.all("SELECT * FROM projects", function (error, theProjects) {
+    if (error) {
+      const model = {
+        dbError: true,
+        theError: error,
+        projects: [],
+      };
+
+      res.render("project.handlebars", model);
+    } else {
+      const model = {
+        dbError: false,
+        theError: "",
+        projects: theProjects,
+      };
+
+      res.render("project.handlebars", model);
+    }
+  });
 });
 
 // defines route "/about"
-app.get("/about", function (request, response) {
-  response.render("about.handlebars");
+app.get("/about", function (req, res) {
+  res.render("about.handlebars");
 });
 
 // defines route "/contact"
-app.get("/contact", function (request, response) {
-  response.render("contact.handlebars");
+app.get("/contact", function (req, res) {
+  res.render("contact.handlebars");
 });
 
-app.get("/user-dashboard", function (request, response) {
-  response.render("user-dashboard.handlebars");
+app.get("/user-dashboard", function (req, res) {
+  res.render("user-dashboard.handlebars");
 });
 
-app.get("/project-dashboard", function (request, response) {
-  response.render("project-dashboard.handlebars");
+app.get("/project-dashboard", function (req, res) {
+  res.render("project-dashboard.handlebars");
 });
 
 // defines the final default route 404 NOT FOUND
