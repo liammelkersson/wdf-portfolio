@@ -1,5 +1,6 @@
 const express = require("express");
 const sqlite3 = require("sqlite3");
+const bcrypt = require("bcrypt");
 
 const db = new sqlite3.Database("./db/database.db", (err) => {
   if (err) {
@@ -175,25 +176,38 @@ db.run(
 
       //inserts users
       users.forEach((oneUser) => {
-        db.run(
-          "INSERT INTO users (uID, uName, uUserName, uPassword, uEmail, uRole) VALUES (?, ?, ?, ?, ?, ?)",
-          [
-            oneUser.id,
-            oneUser.name,
-            oneUser.username,
-            oneUser.password,
-            oneUser.email,
-            oneUser.role,
-          ],
-          (error) => {
-            if (error) {
-              console.log("Error: ", error);
-            } else {
-              console.log("Line added into users table!");
-            }
+        const saltRounds = 10; // Number of salt rounds for hashing
+
+        bcrypt.hash(oneUser.password, saltRounds, (err, hash) => {
+          if (err) {
+            // Handle error
+            console.error("Error hashing password:", err);
+          } else {
+            // Store the hashed password in the database
+            const hashedPassword = hash;
+            // Now, you can insert the hashed password into the database
+            db.run(
+              "INSERT INTO users (uID, uName, uUserName, uPassword, uEmail, uRole) VALUES (?, ?, ?, ?, ?, ?)",
+              [
+                oneUser.id,
+                oneUser.name,
+                oneUser.username,
+                hashedPassword, // Use the hashed password here
+                oneUser.email,
+                oneUser.role,
+              ],
+              (error) => {
+                if (error) {
+                  console.log("Error: ", error);
+                } else {
+                  console.log("Line added into users table!");
+                }
+              }
+            );
           }
-        );
+        });
       });
+
       // logs if the table was created
       console.log("Table user created");
     }

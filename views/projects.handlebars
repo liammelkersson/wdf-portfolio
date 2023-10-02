@@ -38,9 +38,7 @@
   <div class="container mx-auto p-8 flex flex-col items-center">
     <h1 class="text-white font-light text-9xl mix-blend-exclusion mt-12">My
       Projects</h1>
-    <div
-      class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-    >
+    <div class="grid grid-cols-3 gap-2 sm:grid-cols-2">
       {{#if dbError}}
         <div class="text-white font-light text-2xl w-80 text-left ml-6 mt-4">
           Sorry, there was a problem with the database:<br />
@@ -48,7 +46,8 @@
         </div>
       {{else}}
         {{#each projects}}
-          <div
+          <a
+            href="/project/{{pID}}"
             class="project blue-box-shadow h-96 w-96 m-5 rounded-3xl bg-zinc-900 border border-solid border-gray-700 hover:bg-zinc-800 hover:border-gray-400 hover:cursor-pointer transition ease-in-out delay-10"
           >
             <img
@@ -65,7 +64,7 @@
               >{{pIntro}}</p>
               <p class="text-gray-500 text-left ml-6 mt-2 w-80">{{pTech}}</p>
             </div>
-          </div>
+          </a>
         {{/each}}
       {{/if}}
     </div>
