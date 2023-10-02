@@ -15,6 +15,7 @@ db.run(
   CREATE TABLE projects (
     pID INTEGER PRIMARY KEY,
     pTitle TEXT NOT NULL,
+    pIntro TEXT NOT NULL,
     pDesc TEXT NOT NULL,
     pImageURL TEXT NOT NULL,
     pGitHubURL TEXT NOT NULL,
@@ -33,6 +34,8 @@ db.run(
         {
           "id": "1",
           "title": "Frogger Game",
+          "intro": `Goal of the project was to gain knowledge within object-oriented
+          programming (OOP)`,
           "desc":
             "A modern take on the classic arcade game. In this game, the player must navigate a frog through various obstacles to reach its destination safely. You have 10 seconds to do this before you lose and the goal is to get as much points as you can before running out of time. As you progress, the game gets harder and harder.",
           "imageURL": "img/frogger.png",
@@ -45,6 +48,7 @@ db.run(
         {
           "id": "2",
           "title": "Portfolio Website",
+          "intro": "intro",
           "desc": "Portoflio website...",
           "imageURL": "img/portfolio.png",
           "gitHubURL": "https://github.com/liammelkersson/wdf-portfolio",
@@ -56,6 +60,7 @@ db.run(
         {
           "id": "3",
           "title": "Umble Beans",
+          "intro": "intro",
           "desc": "fron a coffee e-commerce website",
           "imageURL": "img/umble-beans.png",
           "gitHubURL": "https://github.com/ju-nmd2022/wuid-project-group-16",
@@ -66,6 +71,7 @@ db.run(
         {
           "id": "4",
           "title": "Lunar Lander",
+          "intro": "intro",
           "desc": "fun game",
           "imageURL": "img/lunarlander.png",
           "gitHubURL":
@@ -77,6 +83,7 @@ db.run(
         {
           "id": "5",
           "title": "AI-chat bot",
+          "intro": "intro",
           "desc": "api exercise",
           "imageURL": "img/chat-bot.png",
           "gitHubURL": "https://github.com/liammelkersson/ai-chat-bot",
@@ -89,10 +96,11 @@ db.run(
       //inserts projects
       projects.forEach((oneProject) => {
         db.run(
-          "INSERT INTO projects (pID, pTitle, pDesc, pImageURL, pGitHubURL, pTech, pCat, pUser) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+          "INSERT INTO projects (pID, pTitle, pIntro, pDesc, pImageURL, pGitHubURL, pTech, pCat, pUser) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
           [
             oneProject.id,
             oneProject.title,
+            oneProject.intro,
             oneProject.desc,
             oneProject.imageURL,
             oneProject.gitHubURL,
@@ -321,6 +329,5 @@ db.run(
     }
   }
 );
-db.close();
 
 module.exports = db;

@@ -44,7 +44,7 @@ app.get("/projects", function (req, res) {
         projects: [],
       };
 
-      res.render("project.handlebars", model);
+      res.render("projects.handlebars", model);
     } else {
       const model = {
         dbError: false,
@@ -52,7 +52,7 @@ app.get("/projects", function (req, res) {
         projects: theProjects,
       };
 
-      res.render("project.handlebars", model);
+      res.render("projects.handlebars", model);
     }
   });
 });
@@ -68,11 +68,47 @@ app.get("/contact", function (req, res) {
 });
 
 app.get("/user-dashboard", function (req, res) {
-  res.render("user-dashboard.handlebars");
+  db.all("SELECT * FROM users", function (error, theUsers) {
+    if (error) {
+      const model = {
+        dbError: true,
+        theError: error,
+        users: [],
+      };
+
+      res.render("user-dashboard.handlebars", model);
+    } else {
+      const model = {
+        dbError: false,
+        theError: "",
+        users: theUsers,
+      };
+
+      res.render("user-dashboard.handlebars", model);
+    }
+  });
 });
 
 app.get("/project-dashboard", function (req, res) {
-  res.render("project-dashboard.handlebars");
+  db.all("SELECT * FROM projects", function (error, theProjects) {
+    if (error) {
+      const model = {
+        dbError: true,
+        theError: error,
+        users: [],
+      };
+
+      res.render("project-dashboard.handlebars", model);
+    } else {
+      const model = {
+        dbError: false,
+        theError: "",
+        users: theProjects,
+      };
+
+      res.render("project-dashboard.handlebars", model);
+    }
+  });
 });
 
 // defines the final default route 404 NOT FOUND
