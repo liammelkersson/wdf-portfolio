@@ -4,6 +4,16 @@
     <div class="container mx-auto flex justify-center">
       <h1 class="text-2xl font-semibold">User Management Dashboard</h1>
     </div>
+    <div class="container mx-auto flex justify-center">
+      <a class="bg-blue-500 text-white p-1 rounded" href="/user/new">
+        New User
+      </a>
+      {{#if isAdmin}}
+        <a class="bg-blue-500 text-white p-1 rounded" href="/project-dashboard">
+          Project Dashboard
+        </a>
+      {{/if}}
+    </div>
   </header>
 
   <!-- Main Content -->
@@ -35,12 +45,18 @@
               <td class="p-2 border">{{uPassword}}</td>
               <td class="p-2 border">{{uRole}}</td>
               <td class="p-2 border">
-                <button class="bg-blue-500 text-white px-2 py-1 rounded">
+                <a
+                  class="bg-blue-500 text-white px-2 py-1 rounded"
+                  href="/user/update/{{pID}}"
+                >
                   Edit
-                </button>
-                <button class="bg-red-500 text-white px-2 py-1 rounded">
+                </a>
+                <a
+                  class="bg-red-500 text-white px-2 py-1 rounded"
+                  href="/user/delete/{{pID}}"
+                >
                   Delete
-                </button>
+                </a>
               </td>
             </tr>
           {{/each}}

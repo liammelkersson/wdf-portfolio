@@ -3,6 +3,17 @@
   <header class="text-white p-4">
     <div class="container mx-auto flex justify-center">
       <h1 class="text-2xl font-semibold">Project Management Dashboard</h1>
+
+    </div>
+    <div class="container mx-auto flex justify-center">
+      <a class="bg-blue-500 text-white p-1 rounded" href="/projects/new">
+        New Project
+      </a>
+      {{#if isAdmin}}
+        <a class="bg-blue-500 text-white p-1 rounded" href="/user-dashboard">
+          User Dashboard
+        </a>
+      {{/if}}
     </div>
   </header>
 
@@ -28,7 +39,7 @@
         </thead>
         <tbody>
           <!-- Sample User Row (Replace with dynamic data) -->
-          {{#each users}}
+          {{#each projects}}
             <tr class="text-white">
               <td class="p-2 border">{{pID}}</td>
               <td class="p-2 border">{{pTitle}}</td>
@@ -40,12 +51,18 @@
               <td class="p-2 border">{{pCat}}</td>
               <td class="p-2 border">{{pUser}}</td>
               <td class="p-2 border">
-                <button class="bg-blue-500 text-white px-2 py-1 rounded">
+                <a
+                  class="bg-blue-500 text-white px-2 py-1 rounded"
+                  href="/projects/update/{{pID}}"
+                >
                   Edit
-                </button>
-                <button class="bg-red-500 text-white px-2 py-1 rounded">
+                </a>
+                <a
+                  class="bg-red-500 text-white px-2 py-1 rounded"
+                  href="/projects/delete/{{pID}}"
+                >
                   Delete
-                </button>
+                </a>
               </td>
             </tr>
           {{/each}}

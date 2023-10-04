@@ -44,7 +44,7 @@ const SQLiteStore = connectSqlite3(session);
 //defines the session
 app.use(
   session({
-    store: new SQLiteStore({ db: "session-db.db" }),
+    store: new SQLiteStore({ db: "/db/session-db.db" }),
     "saveUninitialized": false,
     "resave": false,
     "secret": "what-111s-real-w111ll-prosper",
@@ -67,7 +67,7 @@ app.use((req, res, next) => {
 app.get("/", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
-    idLoggedIn: req.session.isLoggoedIn,
+    isLoggedIn: req.session.isLoggedIn,
   };
 
   res.render("home.handlebars", model);
@@ -83,7 +83,7 @@ app.get("/projects", function (req, res) {
         theError: error,
         projects: [],
         isAdmin: req.session.isAdmin,
-        idLoggedIn: req.session.isLoggoedIn,
+        isLoggedIn: req.session.isLoggedIn,
       };
 
       res.render("projects.handlebars", model);
@@ -93,7 +93,7 @@ app.get("/projects", function (req, res) {
         theError: "",
         projects: theProjects,
         isAdmin: req.session.isAdmin,
-        idLoggedIn: req.session.isLoggoedIn,
+        isLoggedIn: req.session.isLoggedIn,
       };
 
       res.render("projects.handlebars", model);
@@ -105,7 +105,7 @@ app.get("/projects", function (req, res) {
 app.get("/about", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
-    idLoggedIn: req.session.isLoggoedIn,
+    isLoggedIn: req.session.isLoggedIn,
   };
 
   res.render("about.handlebars", model);
@@ -115,7 +115,7 @@ app.get("/about", function (req, res) {
 app.get("/contact", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
-    idLoggedIn: req.session.isLoggoedIn,
+    isLoggedIn: req.session.isLoggedIn,
   };
 
   res.render("contact.handlebars", model);
@@ -125,10 +125,19 @@ app.get("/contact", function (req, res) {
 app.get("/login", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
-    idLoggedIn: req.session.isLoggoedIn,
+    isLoggedIn: req.session.isLoggedIn,
   };
 
   res.render("login.handlebars", model);
+});
+
+app.get("/logout", function (req, res) {
+  const model = {
+    isAdmin: false,
+    isLoggedIn: false,
+  };
+
+  res.render("home.handlebars", model);
 });
 
 app.post("/login", function (req, res) {
@@ -140,13 +149,13 @@ app.post("/login", function (req, res) {
     (username == "jerome" && password == "youngjerome123")
   ) {
     req.session.isAdmin = true;
-    req.session.isLoggoedIn = true;
+    req.session.isLoggedIn = true;
 
     console.log("Admin logged in");
     res.redirect("/project-dashboard");
   } else {
     req.session.isAdmin = false;
-    req.session.isLoggoedIn = false;
+    req.session.isLoggedIn = false;
 
     console.log("Wrong password!");
     //alert user here
@@ -172,9 +181,7 @@ app.post("/login", function (req, res) {
 });
 
 app.get("/user-dashboard", function (req, res) {
-  if (req.session.uUserName) {
-    res.render("/user-dashboard", { user: req.session.uUserName });
-  } else {
+  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
     db.all("SELECT * FROM users", function (error, theUsers) {
       if (error) {
         const model = {
@@ -182,7 +189,7 @@ app.get("/user-dashboard", function (req, res) {
           theError: error,
           users: [],
           isAdmin: req.session.isAdmin,
-          idLoggedIn: req.session.isLoggoedIn,
+          isLoggedIn: req.session.isLoggedIn,
         };
 
         res.render("user-dashboard.handlebars", model);
@@ -192,18 +199,21 @@ app.get("/user-dashboard", function (req, res) {
           theError: "",
           users: theUsers,
           isAdmin: req.session.isAdmin,
-          idLoggedIn: req.session.isLoggoedIn,
+          isLoggedIn: req.session.isLoggedIn,
         };
 
         res.render("user-dashboard.handlebars", model);
       }
     });
+  } else {
+    console.log("You are not Logged In");
+    //alert user here
+    res.redirect("/login");
   }
 });
 
 app.get("/project-dashboard", function (req, res) {
-  console.log(req.session.uUserName);
-  if (req.session.uUserName) {
+  if (req.session.isLoggedIn == true) {
     db.all("SELECT * FROM projects", function (error, theProjects) {
       if (error) {
         const model = {
@@ -211,7 +221,7 @@ app.get("/project-dashboard", function (req, res) {
           theError: error,
           projects: [],
           isAdmin: req.session.isAdmin,
-          idLoggedIn: req.session.isLoggoedIn,
+          isLoggedIn: req.session.isLoggedIn,
         };
         console.log("Error: " + theError);
         res.render("project-dashboard.handlebars", model);
@@ -221,12 +231,75 @@ app.get("/project-dashboard", function (req, res) {
           theError: "",
           projects: theProjects,
           isAdmin: req.session.isAdmin,
-          idLoggedIn: req.session.isLoggoedIn,
+          isLoggedIn: req.session.isLoggedIn,
         };
 
         res.render("project-dashboard.handlebars", model);
       }
     });
+  } else {
+    console.log("You are not Logged In");
+    //alert user here
+    res.redirect("/login");
+  }
+});
+
+// ========== DELETING USERS & PROJECTS ==========
+app.get("/user/delete/:id", (req, res) => {
+  const id = req.params.id;
+
+  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
+    db.run("DELETE FROM users WHERE uID=?", [id], function (error, theUsers) {
+      if (error) {
+        const model = {
+          dbError: true,
+          theError: error,
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+        };
+        res.render("home.handlebars", model);
+      } else {
+        const model = {
+          dbError: false,
+          theError: "",
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+        };
+        res.render("home.handlebars", model);
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/projects/delete/:id", (req, res) => {
+  const id = req.params.id;
+
+  if (req.session.isLoggedIn == true) {
+    db.run(
+      "DELETE FROM projects WHERE pID=?",
+      [id],
+      function (error, theProjects) {
+        if (error) {
+          const model = {
+            dbError: true,
+            theError: error,
+            isAdmin: req.session.isAdmin,
+            isLoggedIn: req.session.isLoggedIn,
+          };
+          res.render("home.handlebars", model);
+        } else {
+          const model = {
+            dbError: false,
+            theError: "",
+            isAdmin: req.session.isAdmin,
+            isLoggedIn: req.session.isLoggedIn,
+          };
+          res.render("home.handlebars", model);
+        }
+      }
+    );
   } else {
     res.redirect("/login");
   }
@@ -242,7 +315,7 @@ app.get("/project-dashboard", function (req, res) {
 app.use(function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
-    idLoggedIn: req.session.isLoggoedIn,
+    isLoggedIn: req.session.isLoggedIn,
   };
 
   res.status(404).render("404.handlebars", model);
