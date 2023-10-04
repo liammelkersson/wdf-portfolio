@@ -1,60 +1,62 @@
-<div id="main" class="">
+<div id="main" class="bg-gray-200">
   <div>
     <h1>New User</h1>
   </div>
 
   {{#if isLoggedIn}}
-    <form action="/user/new" method="post">
-      <fieldset>
-        <label for="">Name:</label>
-        <input
-          type="text"
-          name="uName"
-          id="uName"
-          placeholder="Liam Melkersson"
-          required="required"
-        />
-        <br />
-        <label for="">Username:</label>
-        <input
-          type="text"
-          name="uUserName"
-          id="uUserName"
-          placeholder="username"
-          required="required"
-        />
-        <br />
-        <label for="">Email:</label>
-        <input
-          type="text"
-          name="uEmail"
-          id="uEmail"
-          placeholder="liammelkersson@live.se"
-          required="required"
-        />
-        <br />
-        <label for="">Password:</label>
-        <input
-          type="text"
-          name="uPassword"
-          id="uPassword"
-          placeholder="••••••••"
-          required="required"
-        />
-        <br />
-        <label for="uRole">Role:</label>
-        <p>check database or ask admin for more information on roles</p>
-        <select name="uRole" id="uRole" required="required">
-          <option value="1">Admin</option>
-          <option value="2">User</option>
-          <option value="3">User Manager</option>
-          <option value="4">Editor</option>
-          <option value="5">Creator</option>
-        </select>
-      </fieldset>
-      <input type="submit" value="Add User" />
-    </form>
-  {{else}}
-    <p>You have to be logged in to add projects...</p>
+    {{#if isAdmin}}
+      <form action="/user/new" method="post">
+        <fieldset>
+          <label for="">Name:</label>
+          <input
+            type="text"
+            name="uName"
+            id="uName"
+            placeholder="Liam Melkersson"
+            required="required"
+          />
+          <br />
+          <label for="">Username:</label>
+          <input
+            type="text"
+            name="uUserName"
+            id="uUserName"
+            placeholder="username"
+            required="required"
+          />
+          <br />
+          <label for="">Email:</label>
+          <input
+            type="text"
+            name="uEmail"
+            id="uEmail"
+            placeholder="liammelkersson@live.se"
+            required="required"
+          />
+          <br />
+          <label for="">Password:</label>
+          <input
+            type="text"
+            name="uPassword"
+            id="uPassword"
+            placeholder="••••••••"
+            required="required"
+          />
+          <br />
+          <label for="uRole">Role:</label>
+          <p>check database or ask admin for more information on roles</p>
+          <select name="uRole" id="uRole" required="required">
+            <option value="1">Admin</option>
+            <option value="2">User</option>
+            <option value="3">User Manager</option>
+            <option value="4">Editor</option>
+            <option value="5">Creator</option>
+          </select>
+        </fieldset>
+        <input type="submit" value="Add User" />
+      </form>
+    {{else}}
+      <p>You have to be logged in to add projects...</p>
+    {{/if}}
   {{/if}}
 </div>

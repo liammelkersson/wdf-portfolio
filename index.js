@@ -15,6 +15,9 @@ const app = express();
 // Model (DATA) from the database.js module
 const db = require("./db/database");
 
+//stores sessions in the db
+const SQLiteStore = connectSqlite3(session);
+
 // ========== MVC SETUP ==========
 // defines handlebars engine
 app.engine("handlebars", engine());
@@ -33,13 +36,10 @@ app.set("views", "./views");
 //   }
 // };
 
-// ========== POST FORMS ==========
+// ========== MIDDLEWARES ==========
+// Post forms
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// ========== SESSIONS ==========
-//stores sessions in the db
-const SQLiteStore = connectSqlite3(session);
 
 //defines the session
 app.use(
@@ -51,12 +51,10 @@ app.use(
   })
 );
 
-// ========== LOADING ASSETS ==========
 // define static directory "public" to access css/, img/ and vid/
 app.use(express.static("public"));
 
-// ========== LOG ALL URL REQUESTS ==========
-// defines a middleware to log all the incoming requests' URL
+// Log all URL requests
 app.use((req, res, next) => {
   console.log("Req. URL: ", req.url);
   next();
@@ -68,6 +66,7 @@ app.get("/", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
     isLoggedIn: req.session.isLoggedIn,
+    role: req.session.role,
   };
 
   res.render("home.handlebars", model);
@@ -84,6 +83,7 @@ app.get("/projects", function (req, res) {
         projects: [],
         isAdmin: req.session.isAdmin,
         isLoggedIn: req.session.isLoggedIn,
+        role: req.session.role,
       };
 
       res.render("projects.handlebars", model);
@@ -94,6 +94,7 @@ app.get("/projects", function (req, res) {
         projects: theProjects,
         isAdmin: req.session.isAdmin,
         isLoggedIn: req.session.isLoggedIn,
+        role: req.session.role,
       };
 
       res.render("projects.handlebars", model);
@@ -106,6 +107,7 @@ app.get("/about", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
     isLoggedIn: req.session.isLoggedIn,
+    role: req.session.role,
   };
 
   res.render("about.handlebars", model);
@@ -116,6 +118,7 @@ app.get("/contact", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
     isLoggedIn: req.session.isLoggedIn,
+    role: req.session.role,
   };
 
   res.render("contact.handlebars", model);
@@ -126,9 +129,78 @@ app.get("/login", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
     isLoggedIn: req.session.isLoggedIn,
+    role: req.session.role,
   };
 
   res.render("login.handlebars", model);
+});
+
+app.post("/login", function (req, res) {
+  const username = req.body.username;
+  const password = req.body.password;
+  // const role = parseInt(req.body.role, 10);
+
+  // if (
+  //   (username == "liammelkersson" && password == "abc123") ||
+  //   (username == "jerome" && password == "youngjerome123")
+  // ) {
+  //   req.session.isAdmin = true;
+  //   req.session.isLoggedIn = true;
+
+  //   console.log("Admin logged in");
+  //   res.redirect("/project-dashboard");
+  // } else {
+  //   req.session.isAdmin = false;
+  //   req.session.isLoggedIn = false;
+
+  //   console.log("Wrong password!");
+  //   //alert user here
+  //   res.redirect("/login");
+  // }
+
+  db.get("SELECT * FROM users WHERE uUserName = ?", [username], (err, user) => {
+    if (err) {
+      res.status(500).send({ error: "Server error" });
+    } else if (!user) {
+      res.status(401).send({ error: "User not found" });
+    } else {
+      const result = bcrypt.compareSync(password, user.uPassword);
+      if (result) {
+        req.session.role = user.uRole;
+        req.session.username = user;
+        req.session.isLoggedIn = true;
+
+        db.get(
+          "SELECT * FROM users WHERE uUserName = ?",
+          [username],
+          (err, user) => {
+            if (err) {
+              res.status(500).send({ error: "Server error" });
+            } else if (!user) {
+              res.status(401).send({ error: "User not found" });
+            } else {
+              const result = bcrypt.compareSync(password, user.uPassword);
+              if (result) {
+                // Save the role in the session
+                req.session.role = user.uRole; // Save the user's role
+                req.session.isLoggedIn = true;
+
+                if (user.uRole === 1) {
+                  req.session.isAdmin = true;
+                } else {
+                  req.session.isAdmin = false;
+                }
+
+                res.redirect("/project-dashboard");
+              } else {
+                res.status(401).send({ error: "Wrong password" });
+              }
+            }
+          }
+        );
+      }
+    }
+  });
 });
 
 app.get("/logout", function (req, res) {
@@ -137,47 +209,8 @@ app.get("/logout", function (req, res) {
     isLoggedIn: false,
   };
 
+  req.session.destroy();
   res.render("home.handlebars", model);
-});
-
-app.post("/login", function (req, res) {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  if (
-    (username == "liammelkersson" && password == "abc123") ||
-    (username == "jerome" && password == "youngjerome123")
-  ) {
-    req.session.isAdmin = true;
-    req.session.isLoggedIn = true;
-
-    console.log("Admin logged in");
-    res.redirect("/project-dashboard");
-  } else {
-    req.session.isAdmin = false;
-    req.session.isLoggedIn = false;
-
-    console.log("Wrong password!");
-    //alert user here
-    res.redirect("/login");
-  }
-
-  // Requires a sqlite3 database
-  // db.get("SELECT * FROM users WHERE uUserName = ?", [username], (err, user) => {
-  //   if (err) {
-  //     res.status(500).send({ error: "Server error" });
-  //   } else if (!user) {
-  //     res.status(401).send({ error: "User not found" });
-  //   } else {
-  //     const result = bcrypt.compareSync(password, user.uPassword);
-  //     if (result) {
-  //       req.session.uUserName = user;
-  //       res.redirect("/project-dashboard");
-  //     } else {
-  //       res.status(401).send({ error: "Wrong password" });
-  //     }
-  //   }
-  // });
 });
 
 app.get("/user-dashboard", function (req, res) {
@@ -190,6 +223,7 @@ app.get("/user-dashboard", function (req, res) {
           users: [],
           isAdmin: req.session.isAdmin,
           isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
         };
 
         res.render("user-dashboard.handlebars", model);
@@ -200,6 +234,7 @@ app.get("/user-dashboard", function (req, res) {
           users: theUsers,
           isAdmin: req.session.isAdmin,
           isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
         };
 
         res.render("user-dashboard.handlebars", model);
@@ -222,6 +257,7 @@ app.get("/project-dashboard", function (req, res) {
           projects: [],
           isAdmin: req.session.isAdmin,
           isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
         };
         console.log("Error: " + theError);
         res.render("project-dashboard.handlebars", model);
@@ -232,6 +268,7 @@ app.get("/project-dashboard", function (req, res) {
           projects: theProjects,
           isAdmin: req.session.isAdmin,
           isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
         };
 
         res.render("project-dashboard.handlebars", model);
@@ -256,6 +293,7 @@ app.get("/user/delete/:id", (req, res) => {
           theError: error,
           isAdmin: req.session.isAdmin,
           isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
         };
         res.render("home.handlebars", model);
       } else {
@@ -264,6 +302,7 @@ app.get("/user/delete/:id", (req, res) => {
           theError: "",
           isAdmin: req.session.isAdmin,
           isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
         };
         res.render("home.handlebars", model);
         res.redirect("/user-dashboard");
@@ -288,6 +327,7 @@ app.get("/projects/delete/:id", (req, res) => {
             theError: error,
             isAdmin: req.session.isAdmin,
             isLoggedIn: req.session.isLoggedIn,
+            role: req.session.role,
           };
           res.render("home.handlebars", model);
         } else {
@@ -296,6 +336,7 @@ app.get("/projects/delete/:id", (req, res) => {
             theError: "",
             isAdmin: req.session.isAdmin,
             isLoggedIn: req.session.isLoggedIn,
+            role: req.session.role,
           };
           res.render("home.handlebars", model);
           res.redirect("/project-dashboard");
@@ -314,6 +355,7 @@ app.get("/user/new", (req, res) => {
     const model = {
       isAdmin: req.session.isAdmin,
       isLoggedIn: req.session.isLoggedIn,
+      role: req.session.role,
     };
 
     res.render("newuser.handlebars", model);
@@ -354,6 +396,7 @@ app.get("/project/new", (req, res) => {
     const model = {
       isAdmin: req.session.isAdmin,
       isLoggedIn: req.session.isLoggedIn,
+      role: req.session.role,
     };
 
     res.render("newproject.handlebars", model);
@@ -393,18 +436,96 @@ app.post("/project/new", (req, res) => {
 });
 
 // ========== MODIFYING USERS & PROJECTS ==========
+//sends modifying form
+app.get("/projects/update:id", (req, res) => {
+  const id = req.params.id;
 
-// // Route to destroy the session (should be defined after session middleware)
-// app.get("/logout", (req, res) => {
-//   req.session.destroy();
-//   res.send("Session destroyed");
-// });
+  db.get(
+    "SELECT * FROM projects WHERE pID=?",
+    [id],
+    function (error, theProject) {
+      if (error) {
+        console.log("ERROR: ", error);
+
+        const model = {
+          dbError: true,
+          theError: error,
+          project: {},
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
+        };
+        res.render("modifyproject.handlebars", model);
+      } else {
+        const model = {
+          dbError: false,
+          theError: "",
+          project: theProject,
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
+          helpers: {
+            theCatFE(value) {
+              return value == "Front-end";
+            },
+            theCatFS(value) {
+              return value == "Full-stack";
+            },
+            theCatGD(value) {
+              return value == "Game dev";
+            },
+            theCatP(value) {
+              return value == "Practice";
+            },
+            theCatAD(value) {
+              return value == "App dev";
+            },
+          },
+        };
+        res.render("modifyproject.handlebars", model);
+      }
+    }
+  );
+});
+
+app.post("/projects/update/:id", (req, res) => {
+  const id = req.params.id;
+  const newp = [
+    req.body.pTitle,
+    req.body.pIntro,
+    req.body.pDesc,
+    req.body.pImageURL,
+    req.body.pGitHubURL,
+    req.body.pTech,
+    req.body.pCat,
+    req.body.pUser,
+    id,
+  ];
+
+  if (req.session.isLoggedIn == true) {
+    db.run(
+      "UPDATE projects SET pTitle=?, pIntro=?, pDesc=?, pImageURL=?, pGitHubURL=?, pTech=?, pCat=?, pUser=? WHERE pID=?",
+      newp,
+      (error) => {
+        if (error) {
+          console.log("ERROR: ", error);
+        } else {
+          console.log("Project updated!");
+        }
+        red.redirect("/project-dashboard");
+      }
+    );
+  } else {
+    res.redirect("/login");
+  }
+});
 
 // ========== DEFINING FINAL ROUTE 404: NOT FOUND ==========
 app.use(function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
     isLoggedIn: req.session.isLoggedIn,
+    role: req.session.role,
   };
 
   res.status(404).render("404.handlebars", model);
