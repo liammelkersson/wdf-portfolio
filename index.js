@@ -266,6 +266,7 @@ app.get("/user/delete/:id", (req, res) => {
           isLoggedIn: req.session.isLoggedIn,
         };
         res.render("home.handlebars", model);
+        res.redirect("/user-dashboard");
       }
     });
   } else {
@@ -297,6 +298,7 @@ app.get("/projects/delete/:id", (req, res) => {
             isLoggedIn: req.session.isLoggedIn,
           };
           res.render("home.handlebars", model);
+          res.redirect("/project-dashboard");
         }
       }
     );
@@ -304,6 +306,93 @@ app.get("/projects/delete/:id", (req, res) => {
     res.redirect("/login");
   }
 });
+
+// ========== CREATING USERS & PROJECTS ==========
+
+app.get("/user/new", (req, res) => {
+  if (req.session.isLoggedIn && req.session.isAdmin) {
+    const model = {
+      isAdmin: req.session.isAdmin,
+      isLoggedIn: req.session.isLoggedIn,
+    };
+
+    res.render("newuser.handlebars", model);
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.post("/user/new", (req, res) => {
+  const newu = [
+    req.body.uName,
+    req.body.uUserName,
+    req.body.uEmail,
+    req.body.uPassword,
+    req.body.uRole,
+  ];
+
+  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
+    db.run(
+      "INSERT INTO users (uName, uUserName, uEmail, uPassword, uRole) VALUES (?, ?, ?, ?, ?)",
+      newu,
+      (error) => {
+        if (error) {
+          console.log("ERROR: ", error);
+        } else {
+          console.log("Line added into the user tabe!");
+        }
+        res.redirect("/user-dashboard");
+      }
+    );
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/project/new", (req, res) => {
+  if (req.session.isLoggedIn) {
+    const model = {
+      isAdmin: req.session.isAdmin,
+      isLoggedIn: req.session.isLoggedIn,
+    };
+
+    res.render("newproject.handlebars", model);
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.post("/project/new", (req, res) => {
+  const newp = [
+    req.body.pTitle,
+    req.body.pIntro,
+    req.body.pDesc,
+    req.body.pImageURL,
+    req.body.pGitHubURL,
+    req.body.pTech,
+    req.body.pCat,
+    req.body.pUser,
+  ];
+
+  if (req.session.isLoggedIn) {
+    db.run(
+      "INSERT INTO projects (pTitle, pIntro, pDesc, pImageURL, pGitHubURL, pTech, pCat, pUser) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      newp,
+      (error) => {
+        if (error) {
+          console.log("ERROR: ", error);
+        } else {
+          console.log("Line added into the projects tabe!");
+        }
+        res.redirect("/project-dashboard");
+      }
+    );
+  } else {
+    res.redirect("/login");
+  }
+});
+
+// ========== MODIFYING USERS & PROJECTS ==========
 
 // // Route to destroy the session (should be defined after session middleware)
 // app.get("/logout", (req, res) => {

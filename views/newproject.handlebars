@@ -1,0 +1,73 @@
+<div id="main" class="">
+  <div>
+    <h1>New Project</h1>
+  </div>
+
+  {{#if isLoggedIn}}
+    <form action="/project/new" method="post">
+      <fieldset>
+        <label for="">Project Title:</label>
+        <input type="text" name="pTitle" id="pTitle" required="required" />
+        <br />
+        <textarea
+          name="pIntro"
+          id="pIntro"
+          cols="30"
+          rows="10"
+          required="required"
+          placeholder="Project Intro..."
+        ></textarea>
+        <br />
+        <textarea
+          name="pDesc"
+          id="pDesc"
+          cols="30"
+          rows="10"
+          required="required"
+          placeholder="Project Description..."
+        ></textarea>
+        <br />
+        <label for="">Image URL:</label>
+        <input
+          type="text"
+          name="pImageURL"
+          id="pImageURL"
+          placeholder="/img/image.png"
+          required="required"
+        />
+        <br />
+        <label for="">GitHub URL:</label>
+        <input
+          type="text"
+          name="pGitHubURL"
+          id="pGitHubURL"
+          placeholder="https://github.com/user/project"
+        />
+        <br />
+        <label for="">Technologies:</label>
+        <input
+          type="text"
+          name="pTech"
+          id="pTech"
+          placeholder="HTML, CSS, JavaScript..."
+          required="required"
+        />
+        <br />
+        <label for="pCat">Category:</label>
+        <select name="pCat" id="pCat" required="required">
+          <option value="1">Front-end</option>
+          <option value="2">Full-stack</option>
+          <option value="3">Game dev</option>
+          <option value="4">Practice</option>
+          <option value="5">App dev</option>
+        </select>
+        <br />
+        <label for="">Creator:</label>
+        <input type="text" name="pUser" id="pUser" required="required" />
+      </fieldset>
+      <input type="submit" value="Create Project" />
+    </form>
+  {{else}}
+    <p>You have to be logged in to add projects...</p>
+  {{/if}}
+</div>
