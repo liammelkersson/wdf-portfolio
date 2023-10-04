@@ -64,14 +64,25 @@
             </a>
           </li>
           <li>
-            <a
-              href="/login"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-gray-300 hover:underline"
-            >
-              ↗ ADMIN LOGIN
-            </a>
+            {{#if isLoggedIn}}
+              <a
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-gray-300 hover:underline"
+              >
+                ↗ LOGOUT
+              </a>
+            {{else}}
+              <a
+                href="/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-gray-300 hover:underline"
+              >
+                ↗ ADMIN LOGIN
+              </a>
+            {{/if}}
           </li>
         </ul>
       </div>

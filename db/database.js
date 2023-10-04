@@ -49,8 +49,10 @@ db.run(
         {
           "id": "2",
           "title": "Portfolio Website",
-          "intro": "intro",
-          "desc": "Portoflio website...",
+          "intro":
+            "Full-stack portfolio with CRUD operations for the Web development fundamentals course.",
+          "desc":
+            "Meet the Full Stack Portfolio Manager with CRUD Operations—an awesome web app designed to give individuals, creatives, and professionals the power to show off their work, skills, and accomplishments in an interactive online portfolio. This project brings together both front-end and back-end tech to create a versatile platform that makes managing and displaying your portfolio a breeze.",
           "imageURL": "img/portfolio.png",
           "gitHubURL": "https://github.com/liammelkersson/wdf-portfolio",
           "tech":
@@ -61,19 +63,23 @@ db.run(
         {
           "id": "3",
           "title": "Umble Beans",
-          "intro": "intro",
-          "desc": "fron a coffee e-commerce website",
+          "intro":
+            "Front-end e-commerce website for a Coffee brand called Umble Beans.",
+          "desc":
+            "Umble Beans presents a captivating front-end e-commerce website that invites coffee enthusiasts into a world of premium coffee experiences. Discover our meticulously curated selection of aromatic blends, single-origin beans, and artisanal accessories. With a sleek and user-friendly interface, our website makes it effortless to explore, shop, and savor the rich flavors of Umble Beans' coffee offerings. ",
           "imageURL": "img/umble-beans.png",
           "gitHubURL": "https://github.com/ju-nmd2022/wuid-project-group-16",
-          "tech": "HTML, CSS, JavaScript",
+          "tech": "HTML, CSS, JavaScript, Graphic Design, UX",
           "cat": "2",
           "user": "1",
         },
         {
           "id": "4",
           "title": "Lunar Lander",
-          "intro": "intro",
-          "desc": "fun game",
+          "intro":
+            "This was an exercise to learn JavaScript, done for a course called Foundations of Programming",
+          "desc":
+            "Blast off into an exhilarating lunar adventure with our Lunar Lander Game. Strap in as you take control of a lunar module, navigating the treacherous terrain of martian surface. This captivating game was meticulously crafted to provide both thrills and challenges, offering players a chance to test their piloting skills in the harsh lunar environment.",
           "imageURL": "img/lunarlander.png",
           "gitHubURL":
             "https://github.com/ju-nmd2022/fop-lunar-lander-liammelkersson",
@@ -84,8 +90,10 @@ db.run(
         {
           "id": "5",
           "title": "AI-chat bot",
-          "intro": "intro",
-          "desc": "api exercise",
+          "intro":
+            "AI-chat bot, made with an API. Inspired by the giant chat bot ChatGPT of course.",
+          "desc":
+            "Step into the future of conversational AI with our cutting-edge chatbot, powered by a robust API and inspired by the legendary ChatGPT. Our AI chatbot brings the magic of natural language understanding to your fingertips. Engage in seamless and insightful conversations, ask questions, seek advice, or simply chat for fun. With its AI-driven intelligence, our chatbot offers a human-like interaction that's both informative and entertaining. Just like its inspiration, ChatGPT, it's a testament to the incredible capabilities of AI and is designed to enhance your online experiences with a touch of sophistication and innovation.",
           "imageURL": "img/chat-bot.png",
           "gitHubURL": "https://github.com/liammelkersson/ai-chat-bot",
           "tech": "HTML, CSS, JavaScript, API's",
