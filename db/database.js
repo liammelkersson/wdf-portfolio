@@ -1,7 +1,9 @@
+// ========== PACKAGES  ==========
 const express = require("express");
 const sqlite3 = require("sqlite3");
 const bcrypt = require("bcrypt");
 
+// ========== CREATE NEW DB  ==========
 const db = new sqlite3.Database("./db/database.db", (err) => {
   if (err) {
     console.error(err.message);
@@ -10,11 +12,11 @@ const db = new sqlite3.Database("./db/database.db", (err) => {
   }
 });
 
-//PROJECTS TABLE
+// ========== PROJECTS TABLE ==========
 db.run(
   `
   CREATE TABLE projects (
-    pID INTEGER PRIMARY KEY,
+    pID INTEGER PRIMARY KEY AUTOINCREMENT,
     pTitle TEXT NOT NULL,
     pIntro TEXT NOT NULL,
     pDesc TEXT NOT NULL,
@@ -132,9 +134,9 @@ db.run(
   }
 );
 
-//USERS TABLE
+// ========== USERS TABLE ==========
 db.run(
-  "CREATE TABLE users (uID INTEGER PRIMARY KEY, uName TEXT, uUserName TEXT NOT NULL, uPassword TEXT NOT NULL, uEmail TEXT NOT NULL, uRole INTEGER, FOREIGN KEY (uRole) REFERENCES roles (rID))",
+  "CREATE TABLE users (uID INTEGER PRIMARY KEY AUTOINCREMENT, uName TEXT, uUserName TEXT NOT NULL, uPassword TEXT NOT NULL, uEmail TEXT NOT NULL, uRole INTEGER, FOREIGN KEY (uRole) REFERENCES roles (rID))",
   (error) => {
     if (error) {
       console.log("Error: ", error);
@@ -222,9 +224,9 @@ db.run(
   }
 );
 
-//ROLES TABLE
+// ========== ROLES TABLE ==========
 db.run(
-  "CREATE TABLE roles (rID INTEGER PRIMARY KEY, rName TEXT NOT NULL, rPermissions TEXT NOT NULL, rDesc TEXT NOT NULL)",
+  "CREATE TABLE roles (rID INTEGER PRIMARY KEY AUTOINCREMENT, rName TEXT NOT NULL, rPermissions TEXT NOT NULL, rDesc TEXT NOT NULL)",
   (error) => {
     if (error) {
       console.log("Error: ", error);
@@ -287,9 +289,9 @@ db.run(
   }
 );
 
-//CATEGORIES TABLE (not done yet)
+// ========== CATEGORIES TABLE ==========
 db.run(
-  "CREATE TABLE categories (cID INTERGER PRIMARY KEY, cName TEXT NOT NULL, cDesc TEXT NOT NULL, cType TEXT NOT NULL)",
+  "CREATE TABLE categories (cID INTERGER PRIMARY KEY AUTOINCREMENT, cName TEXT NOT NULL, cDesc TEXT NOT NULL, cType TEXT NOT NULL)",
   (error) => {
     if (error) {
       console.log("Error: ", error);

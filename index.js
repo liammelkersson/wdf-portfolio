@@ -103,13 +103,13 @@ app.get("/projects", function (req, res) {
 });
 
 //renders specific project pages
-app.get("/project/:id", (req, res) => {
+app.get("/specific-project/:id", (req, res) => {
   const id = req.params.id;
 
-  db.all(
+  db.get(
     "SELECT * FROM projects WHERE pID=?",
     [id],
-    function (error, theProject) {
+    function (error, theProjects) {
       if (error) {
         const model = {
           dbError: true,
@@ -120,18 +120,18 @@ app.get("/project/:id", (req, res) => {
           role: req.session.role,
         };
 
-        res.render("project.handlebars", model);
+        res.render("specific-project.handlebars", model);
       } else {
         const model = {
           dbError: false,
           theError: "",
-          projects: theProject,
+          projects: theProjects,
           isAdmin: req.session.isAdmin,
           isLoggedIn: req.session.isLoggedIn,
           role: req.session.role,
         };
 
-        res.render("project.handlebars", model);
+        res.render("specific-project.handlebars", model);
       }
     }
   );
