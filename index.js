@@ -102,6 +102,41 @@ app.get("/projects", function (req, res) {
   });
 });
 
+//renders specific project pages
+app.get("/project/:id", (req, res) => {
+  const id = req.params.id;
+
+  db.all(
+    "SELECT * FROM projects WHERE pID=?",
+    [id],
+    function (error, theProject) {
+      if (error) {
+        const model = {
+          dbError: true,
+          theError: error,
+          projects: {},
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
+        };
+
+        res.render("project.handlebars", model);
+      } else {
+        const model = {
+          dbError: false,
+          theError: "",
+          projects: theProject,
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
+        };
+
+        res.render("project.handlebars", model);
+      }
+    }
+  );
+});
+
 // defines route "/about"
 app.get("/about", function (req, res) {
   const model = {
