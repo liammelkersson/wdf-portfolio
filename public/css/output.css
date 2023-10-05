@@ -766,6 +766,25 @@ video {
 .h-64 {
   height: 16rem;
 }
+.m-52 {
+  margin: 13rem /* 208px */;
+}
+.m-60 {
+  margin: 15rem /* 240px */;
+}
+.h-120 {
+  height: 30rem;
+}
+.m-80 {
+  margin: 20rem /* 320px */;
+}
+.p-80 {
+  padding: 20rem /* 320px */;
+}
+
+.w-120 {
+  width: 30rem;
+}
 
 .h-1\/3 {
   height: 33.333333%;
