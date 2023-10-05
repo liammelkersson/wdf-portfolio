@@ -1,7 +1,52 @@
 /* RESPONSIVENESS WITH MEDIA QUERIES */
-
 @media only screen and (max-width: 800px) {
-  .md-flip-video {
-    rotate: 90deg;
+  /* GENERAL */
+  .md-title {
+    font-size: 4.25rem;
+    line-height: 4.5rem;
+  }
+
+  .md-p {
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
+
+  .md-flex-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  .md-menu-title {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+  }
+
+  /* FOOTER */
+  .md-pl-4 {
+    padding-left: 1rem;
+  }
+
+  /* ABOUT  */
+  .md-abt-w {
+    width: 90vw;
+  }
+
+  .md-memoji {
+    height: 5rem;
+    margin-top: 3rem;
+  }
+
+  /* CONTACT */
+  .md-w-spotify {
+    width: 90vw;
+  }
+
+  .md-cntct-w {
+    width: 90vw;
+  }
+
+  .md-email {
+    font-size: 2rem;
   }
 }

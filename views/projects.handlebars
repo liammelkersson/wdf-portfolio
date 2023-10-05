@@ -1,13 +1,17 @@
 <div id="main">
   <div class="w-screen p-8 flex flex-col items-center">
-    <h1 class="text-white font-light text-9xl mix-blend-exclusion mt-12">My
-      Projects</h1>
-    <p class="text-white font-light text-xl w-80 text-center mt-5 mb-5">Here,
-      you can explore a variety of my work, including web applications,
+    <h1
+      class="text-white font-light text-9xl mix-blend-exclusion mt-12 md-title"
+    >My Projects</h1>
+    <p
+      class="text-white font-light text-xl w-80 text-center mt-5 mb-5 md-p"
+    >Here, you can explore a variety of my work, including web applications,
       software, and creative projects.</p>
     <div class="flex flex-row flex-wrap justify-center w-screen">
       {{#if dbError}}
-        <div class="text-white font-light text-2xl w-80 text-left ml-6 mt-4">
+        <div
+          class="text-white font-light text-2xl w-80 text-left ml-6 mt-4 md-p"
+        >
           Sorry, there was a problem with the database:<br />
           {{theError}}
         </div>
