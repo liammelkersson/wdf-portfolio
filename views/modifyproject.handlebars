@@ -23,7 +23,7 @@
           required="required"
           placeholder="Project Intro..."
           value="{{project.pIntro}}"
-        ></textarea>
+        >{{project.pIntro}}</textarea>
         <br />
         <textarea
           name="pDesc"
@@ -33,7 +33,7 @@
           required="required"
           placeholder="Project Description..."
           value="{{project.pDesc}}"
-        ></textarea>
+        >{{project.pDesc}}</textarea>
         <br />
         <label for="">Image URL:</label>
         <input
@@ -68,28 +68,33 @@
         <select name="pCat" id="pCat" required="required">
           <option
             value="Front-end"
-            {{if (theCatFE project.pCat)}}
+            {{#if (theCatFE project.pCat)}}
             selected="selected"
+            {{/if}}
           >Front-end</option>
           <option
             value="Full-stack"
-            {{if (theCatFS project.pCat)}}
+            {{#if (theCatFS project.pCat)}}
             selected="selected"
+            {{/if}}
           >Full-stack</option>
           <option
             value="Game dev"
-            {{if (theCatGD project.pCat)}}
+            {{#if (theCatGD project.pCat)}}
             selected="selected"
+             {{/if}}
           >Game dev</option>
           <option
             value="Practice"
-            {{if (theCatP project.pCat)}}
+            {{#if (theCatP project.pCat)}}
             selected="selected"
+            {{/if}}
           >Practice</option>
           <option
             value="App dev"
-            {{if (theCatAD project.pCat)}}
+            {{#if (theCatAD project.pCat)}}
             selected="selected"
+            {{/if}}
           >App dev</option>
         </select>
         <br />
@@ -105,6 +110,6 @@
       <input type="submit" value="Create Project" />
     </form>
   {{else}}
-    <p>You have to be logged in to add projects...</p>
+    <p>You have to be logged in to modify projects...</p>
   {{/if}}
 </div>

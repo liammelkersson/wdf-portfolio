@@ -181,8 +181,7 @@ app.post("/login", function (req, res) {
             } else {
               const result = bcrypt.compareSync(password, user.uPassword);
               if (result) {
-                // Save the role in the session
-                req.session.role = user.uRole; // Save the user's role
+                req.session.role = user.uRole;
                 req.session.isLoggedIn = true;
 
                 if (user.uRole === 1) {
@@ -437,7 +436,83 @@ app.post("/project/new", (req, res) => {
 
 // ========== MODIFYING USERS & PROJECTS ==========
 //sends modifying form
-app.get("/projects/update:id", (req, res) => {
+app.get("/user/update/:id", (req, res) => {
+  const id = req.params.id;
+
+  db.get("SELECT * FROM users WHERE uID=?", [id], function (error, theUser) {
+    if (error) {
+      console.log("ERROR: ", error);
+
+      const model = {
+        dbError: true,
+        theError: error,
+        user: {},
+        isAdmin: req.session.isAdmin,
+        isLoggedIn: req.session.isLoggedIn,
+        role: req.session.role,
+      };
+      res.render("modifyuser.handlebars", model);
+    } else {
+      const model = {
+        dbError: false,
+        theError: "",
+        user: theUser,
+        isAdmin: req.session.isAdmin,
+        isLoggedIn: req.session.isLoggedIn,
+        role: req.session.role,
+        helpers: {
+          theRoleA(value) {
+            return value == "Admin";
+          },
+          theRoleU(value) {
+            return value == "User";
+          },
+          theRoleUM(value) {
+            return value == "User Manager";
+          },
+          theRoleE(value) {
+            return value == "Editor";
+          },
+          theRoleC(value) {
+            return value == "Creator";
+          },
+        },
+      };
+      res.render("modifyuser.handlebars", model);
+    }
+  });
+});
+
+app.post("/user/update/:id", (req, res) => {
+  const id = req.params.id;
+  const newu = [
+    req.body.uName,
+    req.body.uUserName,
+    req.body.uEmail,
+    req.body.uPassword,
+    req.body.uRole,
+    id,
+  ];
+
+  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
+    db.run(
+      "UPDATE users SET uName=?, uUserName=?, uEmail=?, uPassword=?, uRole=? WHERE uID=?",
+      newu,
+      (error) => {
+        if (error) {
+          console.log("ERROR: ", error);
+        } else {
+          console.log("User updated!");
+        }
+        res.redirect("/user-dashboard");
+      }
+    );
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/projects/update/:id", (req, res) => {
   const id = req.params.id;
 
   db.get(
@@ -512,7 +587,7 @@ app.post("/projects/update/:id", (req, res) => {
         } else {
           console.log("Project updated!");
         }
-        red.redirect("/project-dashboard");
+        res.redirect("/project-dashboard");
       }
     );
   } else {

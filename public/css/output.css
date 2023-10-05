@@ -323,6 +323,10 @@ summary {
 Removes the default spacing and border for appropriate elements.
 */
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 blockquote,
 dl,
 dd,
@@ -444,6 +448,10 @@ video {
 
 [hidden] {
   display: none;
+}
+
+.w-screen {
+  width: 100vw;
 }
 
 *,
@@ -1066,6 +1074,11 @@ video {
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.px-96 {
+  padding-left: 24rem;
+  padding-right: 24rem;
 }
 
 .py-1 {

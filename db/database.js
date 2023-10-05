@@ -174,10 +174,10 @@ db.run(
         },
         {
           "id": "5",
-          "name": "John Doe",
-          "username": "johndoe123",
-          "password": "johndoe123",
-          "email": "john.doe@icloud.com",
+          "name": "Ivo Petrovic",
+          "username": "ivopivo1337",
+          "password": "guccigang69",
+          "email": "ivo.pivo@bing.com",
           "role": "2",
         },
       ];

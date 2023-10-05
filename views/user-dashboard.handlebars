@@ -5,11 +5,14 @@
       <h1 class="text-2xl font-semibold">User Management Dashboard</h1>
     </div>
     <div class="container mx-auto flex justify-center">
-      <a class="bg-blue-500 text-white p-1 rounded" href="/user/new">
+      <a class="bg-blue-500 text-white m-5 p-4 rounded" href="/user/new">
         New User
       </a>
       {{#if isAdmin}}
-        <a class="bg-blue-500 text-white p-1 rounded" href="/project-dashboard">
+        <a
+          class="bg-blue-500 text-white m-5 p-4 rounded"
+          href="/project-dashboard"
+        >
           Project Dashboard
         </a>
       {{/if}}
@@ -46,13 +49,13 @@
               <td class="p-2 border">{{uRole}}</td>
               <td class="p-2 border">
                 <a
-                  class="bg-blue-500 text-white px-2 py-1 rounded"
+                  class="bg-blue-500 text-white px-2 py-1 rounded m-5"
                   href="/user/update/{{uID}}"
                 >
                   Edit
                 </a>
                 <a
-                  class="bg-red-500 text-white px-2 py-1 rounded"
+                  class="bg-red-500 text-white px-2 py-1 rounded m-5"
                   href="/user/delete/{{uID}}"
                 >
                   Delete

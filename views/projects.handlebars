@@ -35,10 +35,10 @@
 </div> --}}
 
 <div id="main">
-  <div class="container mx-auto p-8 flex flex-col items-center">
+  <div class="w-screen p-8 flex flex-col items-center">
     <h1 class="text-white font-light text-9xl mix-blend-exclusion mt-12">My
       Projects</h1>
-    <div class="grid grid-cols-3 gap-2 sm:grid-cols-2">
+    <div class="flex flex-row flex-wrap justify-center w-screen">
       {{#if dbError}}
         <div class="text-white font-light text-2xl w-80 text-left ml-6 mt-4">
           Sorry, there was a problem with the database:<br />

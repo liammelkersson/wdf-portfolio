@@ -1,0 +1,91 @@
+<div id="main" class="bg-gray-200">
+  <div>
+    <h1>New User</h1>
+  </div>
+
+  {{#if isLoggedIn}}
+    {{#if isAdmin}}
+      <form action="/user/update/{{user.uID}}" method="post">
+        <fieldset>
+          <label for="">Name:</label>
+          <input
+            type="text"
+            name="uName"
+            id="uName"
+            placeholder="Liam Melkersson"
+            required="required"
+            value="{{user.uName}}"
+          />
+          <br />
+          <label for="">Username:</label>
+          <input
+            type="text"
+            name="uUserName"
+            id="uUserName"
+            placeholder="username"
+            required="required"
+            value="{{user.uUserName}}"
+          />
+          <br />
+          <label for="">Email:</label>
+          <input
+            type="text"
+            name="uEmail"
+            id="uEmail"
+            placeholder="liammelkersson@live.se"
+            required="required"
+            value="{{user.uEmail}}"
+          />
+          <br />
+          <label for="">Password:</label>
+          <input
+            type="text"
+            name="uPassword"
+            id="uPassword"
+            placeholder="••••••••"
+            required="required"
+            value="{{user.uPassword}}"
+          />
+          <br />
+          <label for="uRole">Role:</label>
+          <p>check database or ask admin for more information on roles</p>
+          <select name="uRole" id="uRole" required="required">
+       <option
+            value="Admin"
+            {{#if (theRoleA user.uRole)}}
+            selected="selected"
+            {{/if}}
+          >Admin</option>
+       <option
+            value="User"
+            {{#if (theRoleU user.uRole)}}
+            selected="selected"
+            {{/if}}
+          >User</option>
+       <option
+            value="User Manager"
+            {{#if (theRoleUM user.uRole)}}
+            selected="selected"
+            {{/if}}
+          >User Manager</option>
+       <option
+            value="Editor"
+            {{#if (theRoleE user.uRole)}}
+            selected="selected"
+            {{/if}}
+          >Editor</option>
+       <option
+            value="Creator"
+            {{#if (theRoleC user.uRole)}}
+            selected="selected"
+            {{/if}}
+          >Creator</option>
+          </select>
+        </fieldset>
+        <input type="submit" value="Edit User" />
+      </form>
+    {{else}}
+      <p>You have to be logged in to modify a user...</p>
+    {{/if}}
+  {{/if}}
+</div>
