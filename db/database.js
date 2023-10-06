@@ -152,9 +152,9 @@ db.run(
         },
         {
           "id": "2",
-          "name": "Jerome Landre",
-          "username": "JL",
-          "password": "youngjerome123",
+          "name": "Jerôme Landré",
+          "username": "JLAdmin",
+          "password": "jerome123",
           "email": "jerome.landre@ju.se",
           "role": "1",
         },
@@ -176,10 +176,10 @@ db.run(
         },
         {
           "id": "5",
-          "name": "Ivo Petrovic",
-          "username": "ivopivo1337",
-          "password": "guccigang69",
-          "email": "ivo.pivo@bing.com",
+          "name": "Jerôme Landré",
+          "username": "JLUser",
+          "password": "jerome456",
+          "email": "jerome.landre@ju.se",
           "role": "2",
         },
       ];
@@ -291,7 +291,7 @@ db.run(
 
 // ========== CATEGORIES TABLE ==========
 db.run(
-  "CREATE TABLE categories (cID INTERGER PRIMARY KEY AUTOINCREMENT, cName TEXT NOT NULL, cDesc TEXT NOT NULL, cType TEXT NOT NULL)",
+  "CREATE TABLE categories (cID INTEGER PRIMARY KEY AUTOINCREMENT, cName TEXT NOT NULL, cDesc TEXT NOT NULL, cType TEXT NOT NULL)",
   (error) => {
     if (error) {
       console.log("Error: ", error);
