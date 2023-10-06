@@ -5,8 +5,6 @@ const bcrypt = require("bcrypt");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const connectSqlite3 = require("connect-sqlite3");
-const cookieParser = require("cookie-parser");
-// const csrf = require("csurf");
 
 // ========== OTHER VARIABLES ==========
 const port = 3000;
