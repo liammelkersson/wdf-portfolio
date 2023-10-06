@@ -27,14 +27,6 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 
 // ========== SECURITY FUNCTIONS ==========
-// Authentication middleware (Define this first)
-// const isAuthenticated = (req, res, next) => {
-//   if (req.isAuthenticated()) {
-//     next();
-//   } else {
-//     res.redirect("/login");
-//   }
-// };
 
 // ========== MIDDLEWARES ==========
 // Post forms
@@ -54,7 +46,7 @@ app.use(
 // define static directory "public" to access css/, img/ and vid/
 app.use(express.static("public"));
 
-// Log all URL requests
+// Logs all URL requests
 app.use((req, res, next) => {
   console.log("Req. URL: ", req.url);
   next();
@@ -399,30 +391,42 @@ app.get("/user/new", (req, res) => {
 });
 
 app.post("/user/new", (req, res) => {
-  const newu = [
-    req.body.uName,
-    req.body.uUserName,
-    req.body.uEmail,
-    req.body.uPassword,
-    req.body.uRole,
-  ];
+  const saltRounds = 10;
 
-  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
-    db.run(
-      "INSERT INTO users (uName, uUserName, uEmail, uPassword, uRole) VALUES (?, ?, ?, ?, ?)",
-      newu,
-      (error) => {
-        if (error) {
-          console.log("ERROR: ", error);
-        } else {
-          console.log("Line added into the user tabe!");
-        }
-        res.redirect("/user-dashboard");
+  bcrypt.hash(req.body.uPassword, saltRounds, (err, hash) => {
+    if (err) {
+      // Handle error
+      console.error("Error hashing password:", err);
+    } else {
+      // Store the hashed password in the database
+      const hashedPassword = hash;
+      // Now, you can insert the hashed password into the database
+      const newu = [
+        req.body.uName,
+        req.body.uUserName,
+        req.body.uEmail,
+        hashedPassword,
+        req.body.uRole,
+      ];
+
+      if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
+        db.run(
+          "INSERT INTO users (uName, uUserName, uEmail, uPassword, uRole) VALUES (?, ?, ?, ?, ?)",
+          newu,
+          (error) => {
+            if (error) {
+              console.log("ERROR: ", error);
+            } else {
+              console.log("Line added into the user tabe!");
+            }
+            res.redirect("/user-dashboard");
+          }
+        );
+      } else {
+        res.redirect("/login");
       }
-    );
-  } else {
-    res.redirect("/login");
-  }
+    }
+  });
 });
 
 app.get("/project/new", (req, res) => {
@@ -519,32 +523,43 @@ app.get("/user/update/:id", (req, res) => {
 });
 
 app.post("/user/update/:id", (req, res) => {
+  const saltRounds = 10;
   const id = req.params.id;
-  const newu = [
-    req.body.uName,
-    req.body.uUserName,
-    req.body.uEmail,
-    req.body.uPassword,
-    req.body.uRole,
-    id,
-  ];
 
-  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
-    db.run(
-      "UPDATE users SET uName=?, uUserName=?, uEmail=?, uPassword=?, uRole=? WHERE uID=?",
-      newu,
-      (error) => {
-        if (error) {
-          console.log("ERROR: ", error);
-        } else {
-          console.log("User updated!");
-        }
-        res.redirect("/user-dashboard");
+  bcrypt.hash(req.body.uPassword, saltRounds, (err, hash) => {
+    if (err) {
+      // Handle error
+      console.error("Error hashing password:", err);
+    } else {
+      const hashedPassword = hash;
+
+      const newu = [
+        req.body.uName,
+        req.body.uUserName,
+        req.body.uEmail,
+        hashedPassword,
+        req.body.uRole,
+        id,
+      ];
+
+      if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
+        db.run(
+          "UPDATE users SET uName=?, uUserName=?, uEmail=?, uPassword=?, uRole=? WHERE uID=?",
+          newu,
+          (error) => {
+            if (error) {
+              console.log("ERROR: ", error);
+            } else {
+              console.log("User updated!");
+            }
+            res.redirect("/user-dashboard");
+          }
+        );
+      } else {
+        res.redirect("/login");
       }
-    );
-  } else {
-    res.redirect("/login");
-  }
+    }
+  });
 });
 
 app.get("/projects/update/:id", (req, res) => {
