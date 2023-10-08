@@ -20,12 +20,6 @@
     display: none;
   }
 
-  /* mix blend messes up my hamburger menu, 
-  so for responsive mode it has to go*/
-  .md-remove-mix-blend {
-    mix-blend-mode: normal;
-  }
-
   /* HEADER */
   .md-menu-title {
     font-size: 1.25rem;

@@ -13,10 +13,10 @@ const app = express();
 // Model (DATA) from the database.js module
 const db = require("./db/database");
 
-//stores sessions in the db
+// stores sessions in a db
 const SQLiteStore = connectSqlite3(session);
 
-//function that converts the role into a number
+// function that converts the role into a number
 function roleConverter(role) {
   if (role == "Admin") {
     return "1";
@@ -30,7 +30,6 @@ function roleConverter(role) {
     return "5";
   } else {
     console.log("There was an error with role conversion");
-    console.log("This is the role: ", role);
   }
 }
 
@@ -41,8 +40,6 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 // defines the views directory
 app.set("views", "./views");
-
-// ========== SECURITY FUNCTIONS ==========
 
 // ========== MIDDLEWARES ==========
 // Post forms
@@ -59,7 +56,7 @@ app.use(
   })
 );
 
-// define static directory "public" to access css/, img/ and vid/
+// define static directory "public"
 app.use(express.static("public"));
 
 // Logs all URL requests
@@ -69,7 +66,6 @@ app.use((req, res, next) => {
 });
 
 // ========== DEFINING ROUTES ==========
-// defines route "/"
 app.get("/", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
@@ -81,7 +77,6 @@ app.get("/", function (req, res) {
   console.log("SESSION: ", session);
 });
 
-// renders route "/projects" with DATA from db
 app.get("/projects", function (req, res) {
   db.all("SELECT * FROM projects", function (error, theProjects) {
     if (error) {
@@ -110,7 +105,6 @@ app.get("/projects", function (req, res) {
   });
 });
 
-//renders specific project pages
 app.get("/specific-project/:id", (req, res) => {
   const id = req.params.id;
 
@@ -145,7 +139,6 @@ app.get("/specific-project/:id", (req, res) => {
   );
 });
 
-// defines route "/about"
 app.get("/about", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
@@ -156,7 +149,6 @@ app.get("/about", function (req, res) {
   res.render("about.handlebars", model);
 });
 
-// defines route "/contact"
 app.get("/contact", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
@@ -167,7 +159,7 @@ app.get("/contact", function (req, res) {
   res.render("contact.handlebars", model);
 });
 
-// ========== DEFINING "ADMIN" ROUTES ==========
+// ========== DEFINING "ADMIN/USER" ROUTES ==========
 app.get("/login", function (req, res) {
   const model = {
     isAdmin: req.session.isAdmin,
@@ -391,7 +383,6 @@ app.get("/projects/delete/:id", (req, res) => {
 });
 
 // ========== CREATING USERS & PROJECTS ==========
-
 app.get("/user/new", (req, res) => {
   if (req.session.isLoggedIn && req.session.isAdmin) {
     const model = {
@@ -491,7 +482,6 @@ app.post("/project/new", (req, res) => {
 });
 
 // ========== MODIFYING USERS & PROJECTS ==========
-//sends modifying form
 app.get("/user/update/:id", (req, res) => {
   const id = req.params.id;
 

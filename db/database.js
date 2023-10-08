@@ -104,7 +104,6 @@ db.run(
         },
       ];
 
-      //inserts projects
       projects.forEach((oneProject) => {
         db.run(
           "INSERT INTO projects (pID, pTitle, pIntro, pDesc, pImageURL, pGitHubURL, pTech, pCat, pUser) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -184,25 +183,21 @@ db.run(
         },
       ];
 
-      //inserts users
       users.forEach((oneUser) => {
-        const saltRounds = 10; // Number of salt rounds for hashing
+        const saltRounds = 10;
 
         bcrypt.hash(oneUser.password, saltRounds, (err, hash) => {
           if (err) {
-            // Handle error
             console.error("Error hashing password:", err);
           } else {
-            // Store the hashed password in the database
             const hashedPassword = hash;
-            // Now, you can insert the hashed password into the database
             db.run(
               "INSERT INTO users (uID, uName, uUserName, uPassword, uEmail, uRole) VALUES (?, ?, ?, ?, ?, ?)",
               [
                 oneUser.id,
                 oneUser.name,
                 oneUser.username,
-                hashedPassword, // Use the hashed password here
+                hashedPassword,
                 oneUser.email,
                 oneUser.role,
               ],
@@ -217,8 +212,6 @@ db.run(
           }
         });
       });
-
-      // logs if the table was created
       console.log("Table user created");
     }
   }
@@ -269,7 +262,6 @@ db.run(
         },
       ];
 
-      //inserts roles
       roles.forEach((oneRole) => {
         db.run(
           "INSERT INTO roles (rID, rName, rPermissions, rDesc) VALUES (?, ?, ?, ?)",
@@ -283,7 +275,6 @@ db.run(
           }
         );
       });
-      // logs if the table was created
       console.log("Table roles created");
     }
   }
@@ -329,7 +320,6 @@ db.run(
         },
       ];
 
-      //inserts roles
       categories.forEach((oneCategory) => {
         db.run(
           "INSERT INTO categories (cID, cName, cDesc, cType) VALUES (?, ?, ?, ?)",
@@ -348,10 +338,10 @@ db.run(
           }
         );
       });
-      // logs if the table was created
       console.log("Table categories created");
     }
   }
 );
 
+//export this file as a module for creating the db in the index file
 module.exports = db;
