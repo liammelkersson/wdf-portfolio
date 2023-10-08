@@ -16,6 +16,16 @@
     flex-direction: column;
   }
 
+  .md-hidden {
+    display: none;
+  }
+
+  /* mix blend messes up my hamburger menu, 
+  so for responsive mode it has to go*/
+  .md-remove-mix-blend {
+    mix-blend-mode: normal;
+  }
+
   /* HEADER */
   .md-menu-title {
     font-size: 1.25rem;
@@ -74,5 +84,73 @@
 
   .md-m-spec-proj {
     margin: 4rem;
+  }
+
+  /* HAMBURGER MENU */
+  .off-screen-menu {
+    z-index: 2;
+    background-color: black;
+    height: 100vh;
+    width: 100%;
+    max-width: 450px;
+    position: fixed;
+    top: 0;
+    right: -450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 3rem;
+    transition: 0.3s ease;
+  }
+
+  .off-screen-menu.active {
+    right: 0;
+  }
+
+  .ham-menu {
+    z-index: 3;
+    display: block;
+    height: 40px;
+    width: 30px;
+    position: relative;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: auto;
+  }
+
+  .ham-menu span {
+    height: 2px;
+    width: 100%;
+    background-color: white;
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.3s ease;
+  }
+
+  .ham-menu span:nth-child(1) {
+    top: 25%;
+  }
+
+  .ham-menu span:nth-child(3) {
+    top: 75%;
+  }
+
+  .ham-menu.active span:nth-child(3) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  .ham-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .ham-menu.active span:nth-child(1) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
   }
 }

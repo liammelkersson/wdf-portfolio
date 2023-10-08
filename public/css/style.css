@@ -18,6 +18,10 @@ body {
   overflow: auto;
 }
 
+.hidden {
+  display: none;
+}
+
 /* HIDE SCROLL BAR  */
 /* Hide scrollbar for Chrome, Safari and Opera */
 .example::-webkit-scrollbar {
