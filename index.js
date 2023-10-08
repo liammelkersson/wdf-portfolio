@@ -16,6 +16,24 @@ const db = require("./db/database");
 //stores sessions in the db
 const SQLiteStore = connectSqlite3(session);
 
+//function that converts the role into a number
+function roleConverter(role) {
+  if (role == "Admin") {
+    return "1";
+  } else if (role == "User") {
+    return "2";
+  } else if (role == "User Manager") {
+    return "3";
+  } else if (role == "Editor") {
+    return "4";
+  } else if (role == "Creator") {
+    return "5";
+  } else {
+    console.log("There was an error with role conversion");
+    console.log("This is the role: ", role);
+  }
+}
+
 // ========== MVC SETUP ==========
 // defines handlebars engine
 app.engine("handlebars", engine());
@@ -398,6 +416,7 @@ app.post("/user/new", (req, res) => {
     } else {
       // Store the hashed password in the database
       const hashedPassword = hash;
+
       // Now, you can insert the hashed password into the database
       const newu = [
         req.body.uName,
@@ -536,7 +555,7 @@ app.post("/user/update/:id", (req, res) => {
         req.body.uUserName,
         req.body.uEmail,
         hashedPassword,
-        req.body.uRole,
+        roleConverter(req.body.uRole),
         id,
       ];
 
