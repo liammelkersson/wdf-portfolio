@@ -95,7 +95,7 @@ db.run(
           "intro":
             "AI-chat bot, made with an API. Inspired by the giant chat bot ChatGPT of course.",
           "desc":
-            "Step into the future of conversational AI with our cutting-edge chatbot, powered by a robust API and inspired by the legendary ChatGPT. Our AI chatbot brings the magic of natural language understanding to your fingertips. Engage in seamless and insightful conversations, ask questions, seek advice, or simply chat for fun. With its AI-driven intelligence, our chatbot offers a human-like interaction that's both informative and entertaining. Just like its inspiration, ChatGPT, it's a testament to the incredible capabilities of AI and is designed to enhance your online experiences with a touch of sophistication and innovation.",
+            "Step into the future of conversational AI with my cutting-edge chatbot, powered by a robust API and inspired by the legendary ChatGPT. Our AI chatbot brings the magic of natural language understanding to your fingertips. Engage in seamless and insightful conversations, ask questions, seek advice, or simply chat for fun. With its AI-driven intelligence, the chatbot offers a human-like interaction that's both informative and entertaining. Just like its inspiration, ChatGPT, it's a testament to the incredible capabilities of AI and is designed to enhance your online experiences with a touch of sophistication and innovation.",
           "imageURL": "img/chat-bot.png",
           "gitHubURL": "https://github.com/liammelkersson/ai-chat-bot",
           "tech": "HTML, CSS, JavaScript, API's",

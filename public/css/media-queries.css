@@ -50,5 +50,29 @@
     font-size: 2rem;
   }
 
+  /* PROJECTS PAGE */
+  .md-w-proj {
+    width: 90vw;
+  }
+
+  .md-text-w-proj {
+    width: 70vw;
+  }
+
+  .md-h-full-proj {
+    height: 100%;
+  }
+
   /* SPECIFIC PROJECTS PAGE */
+  .md-w-spec-proj {
+    width: 90vw;
+  }
+
+  .md-text-w-spec-proj {
+    width: 70vw;
+  }
+
+  .md-m-spec-proj {
+    margin: 4rem;
+  }
 }

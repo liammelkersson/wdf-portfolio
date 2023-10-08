@@ -19,7 +19,7 @@
         {{#each projects}}
           <a
             href="/specific-project/{{pID}}"
-            class="project blue-box-shadow h-96 w-96 m-5 rounded-3xl bg-zinc-900 border border-solid border-gray-700 hover:bg-zinc-800 hover:border-gray-400 hover:cursor-pointer transition ease-in-out delay-10"
+            class="project blue-box-shadow h-96 w-96 m-5 rounded-3xl bg-zinc-900 border border-solid border-gray-700 hover:bg-zinc-800 hover:border-gray-400 hover:cursor-pointer transition ease-in-out delay-10 md-w-proj md-h-full-proj"
           >
             <img
               src="{{pImageURL}}"
@@ -28,12 +28,14 @@
             />
             <div class="p-4">
               <h2
-                class="text-white font-light text-2xl w-80 text-left ml-6 mt-4"
+                class="text-white font-light text-2xl w-80 text-left ml-6 mt-4 md-text-w-proj"
               >{{pTitle}}</h2>
               <p
-                class="text-gray-500 text-left ml-6 mt-2 w-80 text-sm"
+                class="text-gray-500 text-left ml-6 mt-2 w-80 text-sm md-text-w-proj"
               >{{pIntro}}</p>
-              <p class="text-gray-500 text-left ml-6 mt-2 w-80">{{pTech}}</p>
+              <p
+                class="text-gray-500 text-left ml-6 mt-2 w-80 md-text-w-proj"
+              >{{pTech}}</p>
             </div>
           </a>
         {{/each}}

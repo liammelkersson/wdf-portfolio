@@ -2,13 +2,15 @@
   <div class="w-screen p-8 flex flex-col items-center">
     <div class="flex flex-row flex-wrap justify-center w-screen">
       {{#if dbError}}
-        <div class="text-white font-light text-2xl w-80 text-left ml-6 mt-4">
+        <div
+          class="text-white font-light text-2xl w-80 text-left ml-6 mt-4 md-w-spec-proj"
+        >
           Sorry, there was a problem with the database:<br />
           {{theError}}
         </div>
       {{else}}
         <div
-          class="project blue-box-shadow h-full w-120 m-52 rounded-3xl bg-zinc-900 border border-solid border-gray-700"
+          class="project blue-box-shadow h-full w-120 m-40 rounded-3xl bg-zinc-900 border border-solid border-gray-700 md-w-spec-proj md-m-spec-proj"
         >
           <img
             src="../{{projects.pImageURL}}"
@@ -17,18 +19,20 @@
           />
           <div class="p-4">
             <h2
-              class="text-white font-light text-2xl w-96 text-left ml-6 mt-4"
+              class="text-white font-light text-3xl w-96 text-left ml-6 mt-4 md-text-w-spec-proj"
             >{{projects.pTitle}}</h2>
             <p
-              class="text-gray-500 text-left ml-6 w-96 mt-2 text-sm"
+              class="text-gray-500 text-left ml-6 w-96 mt-2 text-base md-text-w-spec-proj"
             >{{projects.pDesc}}</p>
             <br />
             <a
-              class="text-left ml-6 w-96 text-blue-400 mt-4"
+              class="text-left ml-6 w-96 text-blue-400 mt-4 hover:underline"
               href="{{projects.pGitHubURL}}"
             >GitHub</a>
             <br />
-            <p class="text-gray-500 text-left ml-6 mt-2 w-96">
+            <p
+              class="text-gray-500 text-left ml-6 mt-2 w-96 md-text-w-spec-proj"
+            >
               Technologies:
               {{projects.pTech}}</p>
           </div>
