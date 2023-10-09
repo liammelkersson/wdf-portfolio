@@ -78,31 +78,65 @@ app.get("/", function (req, res) {
 });
 
 app.get("/projects", function (req, res) {
-  db.all("SELECT * FROM projects", function (error, theProjects) {
-    if (error) {
-      const model = {
-        dbError: true,
-        theError: error,
-        projects: [],
-        isAdmin: req.session.isAdmin,
-        isLoggedIn: req.session.isLoggedIn,
-        role: req.session.role,
-      };
+  //pagination variables
+  const itemsPerPage = 3;
+  const page = (req.query.page || 1) * 1;
+  const offset = (page - 1) * itemsPerPage;
 
-      res.render("projects.handlebars", model);
-    } else {
-      const model = {
-        dbError: false,
-        theError: "",
-        projects: theProjects,
-        isAdmin: req.session.isAdmin,
-        isLoggedIn: req.session.isLoggedIn,
-        role: req.session.role,
-      };
+  db.all(
+    `SELECT * FROM projects LIMIT ${itemsPerPage} OFFSET ${offset}`,
+    function (error, theProjects) {
+      if (error) {
+        const model = {
+          dbError: true,
+          theError: error,
+          projects: [],
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
+        };
 
-      res.render("projects.handlebars", model);
+        res.render("projects.handlebars", model);
+      } else {
+        db.get("SELECT COUNT(*) as count FROM projects", function (error, row) {
+          if (error) {
+            console.error(error);
+            return;
+          }
+
+          const totalProjects = row.count;
+
+          // calculate pagination variables
+          const totalPages = Math.ceil(totalProjects / itemsPerPage);
+          const showPrev = page > 1;
+          const showNext = page < totalPages;
+
+          // create an array of page numbers
+          const pages = [];
+          for (let i = 1; i <= totalPages; i++) {
+            pages.push(i);
+          }
+
+          const model = {
+            dbError: false,
+            theError: "",
+            projects: theProjects,
+            isAdmin: req.session.isAdmin,
+            isLoggedIn: req.session.isLoggedIn,
+            role: req.session.role,
+            showPrev,
+            showNext,
+            pages,
+            prevPage: page > 1 ? page - 1 : null,
+            nextPage: page < totalPages ? page + 1 : null,
+          };
+          console.log("PAGE: ", req.query.page);
+          console.log("Next PAGE: ", model.nextPage);
+          res.render("projects.handlebars", model);
+        });
+      }
     }
-  });
+  );
 });
 
 app.get("/specific-project/:id", (req, res) => {

@@ -41,5 +41,32 @@
         {{/each}}
       {{/if}}
     </div>
+    <div class="flex items-center justify-center space-x-4 mb-16 mt-14">
+      {{#if showPrev}}
+        <a
+          href="/projects?page={{prevPage}}"
+          class="px-4 py-2 text-white bg-zinc-900 border border-solid border-gray-700 hover:bg-zinc-800 hover:border-gray-400 hover:cursor-pointer transition ease-in-out delay-10 p-2 rounded-xl opacity-70"
+        >
+          Previous
+        </a>
+      {{/if}}
+
+      {{#each pages}}
+        <a
+          href="/projects?page={{this}}"
+          class="px-4 py-2 text-white bg-zinc-900 border border-solid border-gray-700 hover:bg-zinc-800 hover:border-gray-400 hover:cursor-pointer transition ease-in-out delay-10 p-2 rounded-xl w-10 text-center opacity-70"
+        >{{this}}</a>
+      {{/each}}
+
+      {{#if showNext}}
+        <a
+          href="/projects?page={{nextPage}}"
+          class="px-4 py-2 text-white bg-zinc-900 border border-solid border-gray-700 hover:bg-zinc-800 hover:border-gray-400 hover:cursor-pointer transition ease-in-out delay-10 p-2 rounded-xl opacity-70"
+        >
+          Next
+        </a>
+      {{/if}}
+    </div>
+
   </div>
 </div>
