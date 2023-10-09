@@ -10,12 +10,13 @@
 
 html {
   overflow: hidden;
+  overflow-x: hidden;
   height: 100%;
 }
 
 body {
   height: 100%;
-  overflow: auto;
+  overflow-x: hidden;
 }
 
 .hidden {
@@ -24,12 +25,12 @@ body {
 
 /* HIDE SCROLL BAR  */
 /* Hide scrollbar for Chrome, Safari and Opera */
-.example::-webkit-scrollbar {
+.hide-scroll::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.example {
+.hide-scroll {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
