@@ -1,6 +1,6 @@
-<div id="main" class="bg-gray-200">
+<div id="main" class="bg-gray-200 flex flex-col justify-center items-center">
   <div>
-    <h1>Modify Project</h1>
+    <h1 class=" font-light text-3xl mt-4">Modify Project</h1>
   </div>
 
   {{#if isLoggedIn}}
@@ -13,6 +13,7 @@
           id="pTitle"
           value="{{project.pTitle}}"
           required="required"
+          class="m-2 rounded-lg p-1"
         />
         <br />
         <textarea
@@ -23,6 +24,7 @@
           required="required"
           placeholder="Project Intro..."
           value="{{project.pIntro}}"
+          class="m-2 rounded-lg p-1"
         >{{project.pIntro}}</textarea>
         <br />
         <textarea
@@ -33,6 +35,7 @@
           required="required"
           placeholder="Project Description..."
           value="{{project.pDesc}}"
+          class="m-2 rounded-lg p-1"
         >{{project.pDesc}}</textarea>
         <br />
         <label for="">Image URL:</label>
@@ -43,6 +46,7 @@
           placeholder="/img/image.png"
           required="required"
           value="{{project.pImageURL}}"
+          class="m-2 rounded-lg p-1"
         />
         <br />
         <label for="">GitHub URL:</label>
@@ -52,6 +56,7 @@
           id="pGitHubURL"
           placeholder="https://github.com/user/project"
           value="{{project.pGitHubURL}}"
+          class="m-2 rounded-lg p-1"
         />
         <br />
         <label for="">Technologies:</label>
@@ -62,10 +67,11 @@
           placeholder="HTML, CSS, JavaScript..."
           required="required"
           value="{{project.pTech}}"
+          class="m-2 rounded-lg p-1"
         />
         <br />
         <label for="pCat">Category:</label>
-        <select name="pCat" id="pCat" required="required">
+        <select name="pCat" id="pCat" required="required" class="m-2 rounded-lg p-1">
           <option
             value="Front-end"
             {{#if (theCatFE project.pCat)}}
@@ -105,9 +111,10 @@
           id="pUser"
           required="required"
           value="{{project.pUser}}"
+          class="m-2 rounded-lg p-1"
         />
       </fieldset>
-      <input type="submit" value="Edit Project" />
+      <input type="submit" value="Edit Project" class="m-2 p-2 ml-20 bg-blue-500 text-white rounded-lg"/>
     </form>
   {{else}}
     <p>You have to be logged in to modify projects...</p>

@@ -1,6 +1,6 @@
-<div id="main" class="bg-gray-200">
+<div id="main" class="bg-gray-200 flex flex-col justify-center items-center">
   <div>
-    <h1>New User</h1>
+    <h1 class=" font-light text-3xl mt-4">New User</h1>
   </div>
 
   {{#if isLoggedIn}}
@@ -15,6 +15,7 @@
             placeholder="Liam Melkersson"
             required="required"
             value="{{user.uName}}"
+            class="m-2 rounded-lg p-1"
           />
           <br />
           <label for="">Username:</label>
@@ -25,6 +26,7 @@
             placeholder="username"
             required="required"
             value="{{user.uUserName}}"
+            class="m-2 rounded-lg p-1"
           />
           <br />
           <label for="">Email:</label>
@@ -35,6 +37,7 @@
             placeholder="liammelkersson@live.se"
             required="required"
             value="{{user.uEmail}}"
+            class="m-2 rounded-lg p-1"
           />
           <br />
           <label for="">Password:</label>
@@ -45,11 +48,12 @@
             placeholder="••••••••"
             required="required"
             value="{{user.uPassword}}"
+            class="m-2 rounded-lg p-1"
           />
           <br />
           <label for="uRole">Role:</label>
-          <p>check database or ask admin for more information on roles</p>
-          <select name="uRole" id="uRole" required="required">
+          <p class="m-2 rounded-lg p-1">check database or ask admin for more information on roles</p>
+          <select name="uRole" id="uRole" required="required" class="m-2 rounded-lg p-1">
        <option
             value="Admin"
             {{#if (theRoleA user.uRole)}}
@@ -82,7 +86,7 @@
           >Creator</option>
           </select>
         </fieldset>
-        <input type="submit" value="Edit User" />
+        <input type="submit" value="Edit User"class="m-2 p-2 ml-20 bg-blue-500 text-white rounded-lg" />
       </form>
     {{else}}
       <p>You have to be logged in to modify a user...</p>

@@ -1412,3 +1412,30 @@ video {
 .opacity-10 {
   opacity: 0.1;
 }
+
+.m-4 {
+  margin: 1rem /* 16px */;
+}
+
+.m-2 {
+  margin: 0.5rem /* 8px */;
+}
+
+.p-1 {
+  padding: 0.25rem /* 4px */;
+}
+
+.items-center {
+  align-items: center;
+}
+.ml-10 {
+  margin-left: 2.5rem /* 40px */;
+}
+
+.ml-16 {
+  margin-left: 4rem /* 64px */;
+}
+
+.ml-20 {
+  margin-left: 5rem /* 80px */;
+}
