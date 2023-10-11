@@ -207,66 +207,74 @@ app.get("/login", function (req, res) {
 app.post("/login", function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
-  // const role = parseInt(req.body.role, 10);
 
-  // if (
-  //   (username == "liammelkersson" && password == "abc123") ||
-  //   (username == "jerome" && password == "youngjerome123")
-  // ) {
-  //   req.session.isAdmin = true;
-  //   req.session.isLoggedIn = true;
+  // db.get("SELECT * FROM users WHERE uUserName = ?", [username], (err, user) => {
+  //   if (err) {
+  //     res.status(500).send({ error: "Server error" });
+  //   } else if (!user) {
+  //     res.status(401).send({ error: "User not found" });
+  //   } else {
+  //     const result = bcrypt.compareSync(password, user.uPassword);
+  //     if (result) {
+  //       req.session.role = user.uRole;
+  //       req.session.username = user;
+  //       req.session.isLoggedIn = true;
 
-  //   console.log("Admin logged in");
-  //   res.redirect("/project-dashboard");
-  // } else {
-  //   req.session.isAdmin = false;
-  //   req.session.isLoggedIn = false;
+  //       db.get(
+  //         "SELECT * FROM users WHERE uUserName = ?",
+  //         [username],
+  //         (err, user) => {
+  //           if (err) {
+  //             res.status(500).send({ error: "Server error" });
+  //           } else if (!user) {
+  //             res.status(401).send({ error: "User not found" });
+  //           } else {
+  //             const result = bcrypt.compareSync(password, user.uPassword);
+  //             if (result) {
+  //               req.session.role = user.uRole;
+  //               req.session.isLoggedIn = true;
 
-  //   console.log("Wrong password!");
-  //   //alert user here
-  //   res.redirect("/login");
-  // }
+  //               if (user.uRole === 1) {
+  //                 req.session.isAdmin = true;
+  //               } else {
+  //                 req.session.isAdmin = false;
+  //               }
+
+  //               res.redirect("/project-dashboard");
+  //             } else {
+  //               res.status(401).send({ error: "Wrong password" });
+  //             }
+  //           }
+  //         }
+  //       );
+  //     }
+  //   }
+  // });
 
   db.get("SELECT * FROM users WHERE uUserName = ?", [username], (err, user) => {
     if (err) {
-      res.status(500).send({ error: "Server error" });
-    } else if (!user) {
-      res.status(401).send({ error: "User not found" });
-    } else {
-      const result = bcrypt.compareSync(password, user.uPassword);
-      if (result) {
-        req.session.role = user.uRole;
-        req.session.username = user;
-        req.session.isLoggedIn = true;
+      return res.status(500).send({ error: "Server error" });
+    }
 
-        db.get(
-          "SELECT * FROM users WHERE uUserName = ?",
-          [username],
-          (err, user) => {
-            if (err) {
-              res.status(500).send({ error: "Server error" });
-            } else if (!user) {
-              res.status(401).send({ error: "User not found" });
-            } else {
-              const result = bcrypt.compareSync(password, user.uPassword);
-              if (result) {
-                req.session.role = user.uRole;
-                req.session.isLoggedIn = true;
+    if (!user) {
+      return res.status(401).send({ error: "User not found" });
+    }
 
-                if (user.uRole === 1) {
-                  req.session.isAdmin = true;
-                } else {
-                  req.session.isAdmin = false;
-                }
+    const result = bcrypt.compareSync(password, user.uPassword);
 
-                res.redirect("/project-dashboard");
-              } else {
-                res.status(401).send({ error: "Wrong password" });
-              }
-            }
-          }
-        );
+    if (result) {
+      req.session.role = user.uRole;
+      req.session.isLoggedIn = true;
+
+      if (user.uRole === 1) {
+        req.session.isAdmin = true;
+      } else {
+        req.session.isAdmin = false;
       }
+
+      res.redirect("/project-dashboard");
+    } else {
+      res.status(401).send({ error: "Wrong password" });
     }
   });
 });
