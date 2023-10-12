@@ -357,7 +357,41 @@ app.get("/project-dashboard", function (req, res) {
   }
 });
 
-// ========== DELETING USERS & PROJECTS ==========
+app.get("/role-dashboard", function (req, res) {
+  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
+    db.all("SELECT * FROM roles", function (error, theRoles) {
+      if (error) {
+        const model = {
+          dbError: true,
+          theError: error,
+          roles: [],
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
+        };
+
+        res.render("role-dashboard.handlebars", model);
+      } else {
+        const model = {
+          dbError: false,
+          theError: "",
+          roles: theRoles,
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
+        };
+
+        res.render("role-dashboard.handlebars", model);
+      }
+    });
+  } else {
+    console.log("You are not Logged In");
+    //alert user here
+    res.redirect("/login");
+  }
+});
+
+// ========== DELETING USERS, PROJECTS & ROLES ==========
 app.get("/user/delete/:id", (req, res) => {
   const id = req.params.id;
 
@@ -424,7 +458,38 @@ app.get("/projects/delete/:id", (req, res) => {
   }
 });
 
-// ========== CREATING USERS & PROJECTS ==========
+app.get("/role/delete/:id", (req, res) => {
+  const id = req.params.id;
+
+  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
+    db.run("DELETE FROM roles WHERE rID=?", [id], function (error, theRoles) {
+      if (error) {
+        const model = {
+          dbError: true,
+          theError: error,
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
+        };
+        res.render("home.handlebars", model);
+      } else {
+        const model = {
+          dbError: false,
+          theError: "",
+          isAdmin: req.session.isAdmin,
+          isLoggedIn: req.session.isLoggedIn,
+          role: req.session.role,
+        };
+        res.render("home.handlebars", model);
+        res.redirect("/role-dashboard");
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+
+// ========== CREATING USERS, PROJECTS & ROLES ==========
 app.get("/user/new", (req, res) => {
   if (req.session.isLoggedIn && req.session.isAdmin) {
     const model = {
@@ -523,7 +588,42 @@ app.post("/project/new", (req, res) => {
   }
 });
 
-// ========== MODIFYING USERS & PROJECTS ==========
+app.get("/role/new", (req, res) => {
+  if (req.session.isLoggedIn && req.session.isAdmin) {
+    const model = {
+      isAdmin: req.session.isAdmin,
+      isLoggedIn: req.session.isLoggedIn,
+      role: req.session.role,
+    };
+
+    res.render("newrole.handlebars", model);
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.post("/role/new", (req, res) => {
+  const newr = [req.body.rName, req.body.rPermissions, req.body.rDesc];
+
+  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
+    db.run(
+      "INSERT INTO roles (rName, rPermissions, rDesc) VALUES (?, ?, ?)",
+      newr,
+      (error) => {
+        if (error) {
+          console.log("ERROR: ", error);
+        } else {
+          console.log("Line added into the roles tabe!");
+        }
+        res.redirect("/role-dashboard");
+      }
+    );
+  } else {
+    res.redirect("/login");
+  }
+});
+
+// ========== MODIFYING USERS, PROJECTS & ROLES ==========
 app.get("/user/update/:id", (req, res) => {
   const id = req.params.id;
 
@@ -687,6 +787,58 @@ app.post("/projects/update/:id", (req, res) => {
           console.log("Project updated!");
         }
         res.redirect("/project-dashboard");
+      }
+    );
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/role/update/:id", (req, res) => {
+  const id = req.params.id;
+
+  db.get("SELECT * FROM roles WHERE rID=?", [id], function (error, theRole) {
+    if (error) {
+      console.log("ERROR: ", error);
+
+      const model = {
+        dbError: true,
+        theError: error,
+        theRole: {},
+        isAdmin: req.session.isAdmin,
+        isLoggedIn: req.session.isLoggedIn,
+        role: req.session.role,
+      };
+      res.render("modifyrole.handlebars", model);
+    } else {
+      const model = {
+        dbError: false,
+        theError: "",
+        theRole: theRole,
+        isAdmin: req.session.isAdmin,
+        isLoggedIn: req.session.isLoggedIn,
+        role: req.session.role,
+      };
+      res.render("modifyrole.handlebars", model);
+    }
+  });
+});
+
+app.post("/role/update/:id", (req, res) => {
+  const id = req.params.id;
+  const newr = [req.body.rName, req.body.rPermissions, req.body.rDesc, id];
+
+  if (req.session.isLoggedIn == true && req.session.isAdmin == true) {
+    db.run(
+      "UPDATE roles SET rName=?, rPermissions=?, rDesc=? WHERE rID=?",
+      newr,
+      (error) => {
+        if (error) {
+          console.log("ERROR: ", error);
+        } else {
+          console.log("Role updated!");
+        }
+        res.redirect("/role-dashboard");
       }
     );
   } else {

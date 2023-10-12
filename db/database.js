@@ -102,6 +102,33 @@ db.run(
           "cat": "5",
           "user": "1",
         },
+        {
+          "id": "6",
+          "title": "Old Portfolio Website",
+          "intro":
+            "This was an older portfolio website made in a course at University.",
+          "desc":
+            "This Portfolio Website is a classic web development project that originated from a university course. This project showcases the skills and creativity of students as they design and build their personal portfolio websites. Serving as a digital resume, this project allows students to apply web development knowledge and create a compelling online presence.",
+          "imageURL": "img/old-portfolio.png",
+          "gitHubURL":
+            "https://github.com/ju-nmd2022/wuid-portfolio-liammelkersson",
+          "tech": "HTML, CSS",
+          "cat": "1",
+          "user": "1",
+        },
+        {
+          "id": "7",
+          "title": "To-Do List",
+          "intro": "Your classic learning-javascript-exercise. Made at uni.",
+          "desc":
+            "This project is a fundamental learning exercise designed for students at the university level to explore the foundational principles of JavaScript programming. As one of the most popular and versatile programming languages in the world, JavaScript plays a pivotal role in web development, and mastering its fundamentals is essential for any aspiring developer.",
+          "imageURL": "img/todo-list.png",
+          "gitHubURL":
+            "https://github.com/ju-nmd2022/fop-todo-list-liammelkersson",
+          "tech": "HTML, CSS, JavaScript",
+          "cat": "4",
+          "user": "1",
+        },
       ];
 
       projects.forEach((oneProject) => {

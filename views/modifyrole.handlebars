@@ -1,0 +1,54 @@
+<div id="main" class="bg-gray-200 flex flex-col justify-center items-center">
+  <div>
+    <h1 class="font-light text-3xl mt-4">Modify Role</h1>
+  </div>
+
+  {{#if isLoggedIn}}
+    {{#if isAdmin}}
+      <form action="/role/update/{{theRole.rID}}" method="post">
+        <fieldset>
+          <label for="">Name:</label>
+          <input
+            type="text"
+            name="rName"
+            id="rName"
+            placeholder="Admin"
+            required="required"
+            value="{{theRole.rName}}"
+            class="m-2 rounded-lg p-1"
+          />
+          <br />
+          <label for="">Permissions:</label>
+          <input
+            type="text"
+            name="rPermissions"
+            id="rPermissions"
+            placeholder="permissions..."
+            required="required"
+            value="{{theRole.rPermissions}}"
+            class="m-2 rounded-lg p-1"
+          />
+          <br />
+          <label for="">Description:</label>
+          <input
+            type="text"
+            name="rDesc"
+            id="rDesc"
+            placeholder="this role exists because..."
+            required="required"
+            value="{{theRole.rDesc}}"
+            class="m-2 rounded-lg p-1"
+          />
+          <br />
+        </fieldset>
+        <input
+          type="submit"
+          value="Edit Role"
+          class="m-2 p-2 ml-20 bg-blue-500 text-white rounded-lg"
+        />
+      </form>
+    {{else}}
+      <p>You have to be logged in to modify a role...</p>
+    {{/if}}
+  {{/if}}
+</div>
